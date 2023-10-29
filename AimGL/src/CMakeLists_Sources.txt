@@ -1,0 +1,6 @@
+set(PROJECT_SOURCES
+        Game.cpp
+        pch.cpp
+        States/State.cpp
+        States/StateStack.cpp
+        )
