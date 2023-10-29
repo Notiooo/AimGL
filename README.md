@@ -1,6 +1,12 @@
 <div align="center">
 <img src="readme/logo.png" width="350px" alt="AstroFixer"/>
 <h1>AimGL</h1>
+<div style="display: inline">
+<img alt="GitHub Workflow Status (with event)" src="https://img.shields.io/github/actions/workflow/status/Notiooo/AimGL/.github%2Fworkflows%2Fcmake_windows_unit_tests.yml?label=Windows%20Unit%20Tests">
+<img alt="GitHub Workflow Status (with event)" src="https://img.shields.io/github/actions/workflow/status/Notiooo/AimGL/.github%2Fworkflows%2Fcmake_windows_build.yml?label=Windows%20Build">
+<img alt="GitHub Workflow Status (with event)" src="https://img.shields.io/github/actions/workflow/status/Notiooo/AimGL/.github%2Fworkflows%2Fclang-format-check.yml?label=Code%20Formatting">
+
+</div>
 </div>
 <p>This project is quite simple. You push yourself up the ranks of the top players, and I learn the OpenGL API and how to create games without using a pre-built engine. This is a minimalist game/tool for training shooting skills.</p>
 
