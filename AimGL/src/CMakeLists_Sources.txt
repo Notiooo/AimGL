@@ -1,6 +1,13 @@
 set(PROJECT_SOURCES
         Game.cpp
         pch.cpp
+        Renderer3D/Buffer.cpp
+        Renderer3D/BufferElement.cpp
+        Renderer3D/BufferLayout.cpp
+        Renderer3D/IndexBuffer.cpp
+        Renderer3D/Renderer3D.cpp
+        Renderer3D/VertexArray.cpp
+        Renderer3D/VertexBuffer.cpp
         States/State.cpp
         States/StateStack.cpp
         )
