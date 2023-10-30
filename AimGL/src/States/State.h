@@ -1,7 +1,6 @@
 #ifndef STATE_H
 #define STATE_H
-#include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
+
 #include <memory>
 
 #include "States.h"
@@ -28,9 +27,8 @@ public:
     /**
      * \brief Draws only this state to the passed target
      * \param target where it should be drawn to
-     * \param states provides information about rendering process (transform, shader, blend mode)
      */
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    virtual void draw(sf::Window& target) const;
 
     /**
      * \brief Updates the state logic at equal intervals independent of the frame rate.

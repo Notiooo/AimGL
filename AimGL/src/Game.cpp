@@ -27,16 +27,23 @@ Game::Game()
     settings.depthBits = 24;
     settings.stencilBits = 8;
 
-    mGameWindow =
-        std::make_unique<sf::RenderWindow>(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "AimGL",
-                                           sf::Style::Titlebar | sf::Style::Close, settings);
+    // settings.attributeFlags = sf::ContextSettings::Core;
+
+    // If Core should be used, then there is
+    // a need to change the way ImGui is plugged in. For the moment ImGui-SFML uses the SFML
+    // graphics module - so ImGui will not draw on Core setting. This project is developed without
+    // the SFML graphics module and works without it. In the future, it would be useful to plug in
+    // ImGui in such a way that it no longer relies on the SFML graphics module.
+
+    mGameWindow = std::make_unique<sf::Window>(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "AimGL",
+                                               sf::Style::Titlebar | sf::Style::Close, settings);
 
     mGameWindow->setFramerateLimit(FRAMES_PER_SECOND);
     mGameWindow->setActive(true);
     loadResources();
 
 #ifdef _DEBUG
-    ImGui::SFML::Init(*mGameWindow);
+    ImGui::SFML::Init(*mGameWindow, sf::Vector2f(mGameWindow->getSize()), true);
 #endif
 
     // GLEW setup
@@ -72,6 +79,7 @@ void Game::run()
 
 void Game::performGameLoop()
 {
+    MTR_SCOPE("Game", "Game::performGameLoop");
     sf::Clock clock;
     auto frameTimeElapsed = sf::Time::Zero;
     mFixedUpdateClock.restart();
@@ -80,7 +88,8 @@ void Game::performGameLoop()
         MTR_SCOPE("Game", "GameLoop");
         frameTimeElapsed = clock.restart();
 #ifdef _DEBUG
-        ImGui::SFML::Update(*mGameWindow, frameTimeElapsed);
+        ImGui::SFML::Update(sf::Mouse::getPosition(*mGameWindow),
+                            sf::Vector2f(mGameWindow->getSize()), frameTimeElapsed);
 #endif
         update(frameTimeElapsed);
         fixedUpdateAtEqualIntervals();
@@ -138,6 +147,7 @@ void Game::update(const sf::Time& deltaTime)
     MTR_SCOPE("Game", "Game::update");
     auto deltaTimeInSeconds = deltaTime.asSeconds();
 
+    ImGui::ShowDemoWindow();
     mAppStack.update(deltaTimeInSeconds);
 
     if (mAppStack.top() == State_ID::ExitGameState)
@@ -153,12 +163,10 @@ void Game::render()
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // draw the application
-    mAppStack.draw(*mGameWindow, sf::Transform::Identity);
+    mAppStack.draw(*mGameWindow);
 
 #ifdef _DEBUG
-    mGameWindow->pushGLStates();
-    ImGui::SFML::Render(*mGameWindow);
-    mGameWindow->popGLStates();
+    ImGui::SFML::Render();
 #endif
 
     // display to the window

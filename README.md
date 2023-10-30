@@ -14,4 +14,4 @@
 I spent most of my life playing shooters of all kinds. Believe me or not, but what mattered most to me was shooting skills. I am a fan of one-tap (one shot - one frag). Anyone can win a 1 vs 5 clutch, but not everyone can do it by one-tapping the opponent. This cannot be learned without training. That's why this tool was created. 
 
 ### Project
-The game will give several possible training scenarios. However, I will describe it better when I finish the game :3
+- It is developed without using the SFML graphics module (pure OpenGL). SFML is only used to create a window, take inputs or play sounds. Well... and still temporarily SFML graphics module is linked to display ImGui for debugging. This will be changed later.

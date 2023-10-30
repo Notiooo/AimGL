@@ -1,6 +1,6 @@
 #pragma once
 
-#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window.hpp>
 
 #include "Resources/Resources.h"
 #include "States/StateStack.h"
@@ -115,7 +115,7 @@ private:
     /**
      * @brief The window to which the game image should be drawn.
      */
-    std::unique_ptr<sf::RenderWindow> mGameWindow;
+    std::unique_ptr<sf::Window> mGameWindow;
 
     bool isGameRunning = true;
 

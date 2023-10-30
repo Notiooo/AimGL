@@ -8,7 +8,7 @@ State::State(StateStack& stack)
 {
 }
 
-void State::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void State::draw(sf::Window& target) const
 {
 }
 

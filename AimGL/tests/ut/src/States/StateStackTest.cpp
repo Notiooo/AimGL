@@ -1,7 +1,7 @@
 #include "States/StateStack.h"
 #include "States/States.h"
 #include "TestUtils/SFML/EventEqualityOperator.h"
-#include "TestUtils/SFML/Stubs/RenderTargetStub.h"
+#include "TestUtils/SFML/Stubs/WindowStub.h"
 #include "gtest/gtest.h"
 #include <States/MockState.h>
 
@@ -182,10 +182,10 @@ TEST(StateStackTest, StateStackDrawIsCalled)
 {
     UglyTestableStateStack s;
     auto& mock = s.forcePushStateAndReturn<MockState>(State_ID::GameState);
-    RenderTargetStub renderTargetStub;
-    sf::RenderStates renderStates;
-    EXPECT_CALL(mock, draw(testing::_, testing::_));
-    s.draw(renderTargetStub, renderStates);
+    WindowStub windowStub;
+    WindowStub renderStates;
+    EXPECT_CALL(mock, draw(testing::_));
+    s.draw(windowStub);
 }
 
 TEST(StateStackTest, StateStackHandleEventBlockingStateBelow)

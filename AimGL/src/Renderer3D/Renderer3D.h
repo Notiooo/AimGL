@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Renderer3D/IndexBuffer.h"
+#include "Renderer3D/Shader.h"
 #include "Renderer3D/VertexArray.h"
 
 /**
@@ -58,7 +59,7 @@ public:
      * @param ib Specifies the drawing order of the VertexArray.
      * @param shader Shader telling how to draw data.
      */
-    void draw(const VertexArray& va, const IndexBuffer& ib, const sf::Shader& shader,
+    void draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader,
               const DrawMode& drawMode = DrawMode::Triangles) const;
 
 private:

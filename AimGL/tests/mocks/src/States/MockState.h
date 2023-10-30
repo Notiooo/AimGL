@@ -8,8 +8,7 @@ class MockState : public State
 public:
     using State::State;
 
-    MOCK_METHOD(void, draw, (sf::RenderTarget & target, sf::RenderStates states),
-                (const, override));
+    MOCK_METHOD(void, draw, (sf::Window & target), (const, override));
     MOCK_METHOD(bool, fixedUpdate, (const float&), (override));
     MOCK_METHOD(bool, update, (const float&), (override));
     MOCK_METHOD(bool, handleEvent, (const sf::Event&), (override));

@@ -1,11 +1,6 @@
 #include "Renderer3D.h"
 #include "pch.h"
 
-#include <SFML/Graphics/Drawable.hpp>
-#include <SFML/Graphics/RenderStates.hpp>
-#include <SFML/Graphics/RenderTarget.hpp>
-#include <SFML/Graphics/Shader.hpp>
-
 void GLClearError()
 {
     while (glGetError() /* != GL_NO_ERROR*/)
@@ -25,16 +20,16 @@ bool GLLogCall(const char* function, const char* file, int line)
     return true;
 }
 
-void Renderer3D::draw(const VertexArray& va, const IndexBuffer& ib, const sf::Shader& shader,
+void Renderer3D::draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader,
                       const DrawMode& drawMode) const
 {
-    sf::Shader::bind(&shader);
+    // shader.bind();
     va.bind();
     ib.bind();
     GLCall(glDrawElements(toOpenGL(drawMode), ib.size(), GL_UNSIGNED_INT, nullptr));
 
 #ifdef _DEBUG
-    sf::Shader::bind(nullptr);
+    // shader.bind();
     va.unbind();
     ib.unbind();
 #endif

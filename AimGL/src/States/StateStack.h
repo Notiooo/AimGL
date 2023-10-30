@@ -5,7 +5,6 @@
 #include <map>
 #include <vector>
 
-#include "SFML/Graphics/RenderStates.hpp"
 #include "SFML/System/NonCopyable.hpp"
 #include "State.h"
 #include "States.h"
@@ -95,15 +94,14 @@ public:
     void update(const float& deltaTime);
 
     /**
-     * \brief Draws the states in the stack to the given target with given states.
+     * \brief Draws the states in the stack to the given target.
      * \param target where drawable object should be drawn to.
-     * \param states provides information about rendering process (transform, shader, blend mode)
      *
      * Draws the states at the top of the stack. If the state is transparent (returns true)
      * then it also draw the state below it. The state below it is also checked for
      * transparency and the process repeats itself.
      */
-    void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    void draw(sf::Window& target) const;
 
     /**
      * \brief It takes input (event) from the user and sends it to the states on the stack.

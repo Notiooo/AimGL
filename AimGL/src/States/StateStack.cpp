@@ -69,12 +69,12 @@ void StateStack::update(const float& deltaTime)
     }
 }
 
-void StateStack::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void StateStack::draw(sf::Window& target) const
 {
     // Drawing starts from the lowest state to the highest state
     for (const auto& entry: mStack)
     {
-        entry.state->draw(target, states);
+        entry.state->draw(target);
     }
 }
 

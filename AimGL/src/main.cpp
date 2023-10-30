@@ -7,7 +7,7 @@
 #include <stdlib.h>
 
 #if defined(_DEBUG)
-//    #define MTR_ENABLED // Uncomment to enable MiniTrace
+    #undef MTR_ENABLED// Comment to enable MiniTrace
 #endif
 
 int main()

@@ -1,9 +1,8 @@
 #pragma once
 
-#include <SFML/Graphics/Font.hpp>
-#include <SFML/Graphics/Texture.hpp>
-
 #include "Resources/ResourceManager.h"
+#include <Renderer3D/Font.h>
+#include <Renderer3D/Texture.h>
 
 
 class Player;
@@ -19,7 +18,7 @@ enum class TextureManagerId
 /**
  * \brief Object storing textures of the game
  */
-using TextureManager = ResourceManager<sf::Texture, TextureManagerId>;
+using TextureManager = ResourceManager<Texture, TextureManagerId>;
 
 // ====== Fonts ======= //
 
@@ -34,7 +33,7 @@ enum class FontId
 /**
  * \brief Object storing fonts of the game
  */
-using FontManager = ResourceManager<sf::Font, FontId>;
+using FontManager = ResourceManager<Font, FontId>;
 
 /**
  * @brief Any game assets from textures or fonts
