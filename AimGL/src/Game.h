@@ -63,6 +63,17 @@ private:
     void fixedUpdateAtEqualIntervals();
 
     /**
+     * \brief Updates ImGui window displaying start and stop panel for trace collection
+     */
+    void updateImGuiMiniTrace();
+
+    /**
+     * \brief Creates ImGui objects (every frame)
+     * \param deltaTime Time elapsed since the previous frame
+     */
+    void updateImGui(sf::Time deltaTime);
+
+    /**
      * \brief Updates the game logic dependent, or independent of time, every rendered frame.
      * \param deltaTime the time that has passed since the game was last updated.
      *

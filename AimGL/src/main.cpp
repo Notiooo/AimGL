@@ -1,14 +1,6 @@
 #include "Game.h"
+#include "constants.h"
 #include "pch.h"
-
-#define _CRTDBG_MAP_ALLOC
-#include <crtdbg.h>
-#include <iostream>
-#include <stdlib.h>
-
-#if defined(_DEBUG)
-    #undef MTR_ENABLED// Comment to enable MiniTrace
-#endif
 
 int main()
 {

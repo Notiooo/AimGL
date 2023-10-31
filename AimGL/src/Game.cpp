@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "constants.h"
 #include "pch.h"
 
 
@@ -66,13 +67,23 @@ void Game::run()
                  mGameWindow->getSize().y);
 
     mtr_init("chrome-trace.json");
+    if constexpr (not IS_MINITRACE_COLLECTING_AT_START)
+    {
+        mtr_stop();
+    }
+    else
+    {
+        spdlog::info("Minitrace started collecting data");
+    }
     MTR_META_PROCESS_NAME("Game");
     MTR_META_THREAD_NAME("main thread");
 
     performGameLoop();
 
     mGameWindow->close();
+#ifdef _DEBUG
     ImGui::SFML::Shutdown();
+#endif
     mtr_flush();
     mtr_shutdown();
 }
@@ -87,10 +98,6 @@ void Game::performGameLoop()
     {
         MTR_SCOPE("Game", "GameLoop");
         frameTimeElapsed = clock.restart();
-#ifdef _DEBUG
-        ImGui::SFML::Update(sf::Mouse::getPosition(*mGameWindow),
-                            sf::Vector2f(mGameWindow->getSize()), frameTimeElapsed);
-#endif
         update(frameTimeElapsed);
         fixedUpdateAtEqualIntervals();
         processEvents();
@@ -114,6 +121,47 @@ void Game::fixedUpdateAtEqualIntervals()
         }
         while (mTimeSinceLastFixedUpdate > TIME_PER_FIXED_UPDATE_CALLS);
     }
+}
+
+void Game::updateImGuiMiniTrace()
+{
+#ifdef MTR_ENABLED
+    static bool isMinitraceCollecting = IS_MINITRACE_COLLECTING_AT_START;
+    ImGui::Begin("MiniTrace", 0, ImGuiWindowFlags_AlwaysAutoResize);
+    if (isMinitraceCollecting)
+    {
+        ImGui::Text("Collecting minitrace...");
+    }
+    else
+    {
+        ImGui::Text("Idle...");
+    }
+    if (ImGui::Button("Start collecting trace"))
+    {
+        mtr_start();
+        isMinitraceCollecting = true;
+        spdlog::info("Minitrace started collecting data");
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Stop collecting trace"))
+    {
+        mtr_stop();
+        isMinitraceCollecting = false;
+        spdlog::info("Minitrace stopped collecting data");
+    }
+    ImGui::End();
+#endif
+}
+
+void Game::updateImGui(sf::Time time)
+{
+#ifdef _DEBUG
+
+    ImGui::SFML::Update(sf::Mouse::getPosition(*mGameWindow), sf::Vector2f(mGameWindow->getSize()),
+                        time);
+
+    updateImGuiMiniTrace();
+#endif
 }
 
 void Game::processEvents()
@@ -147,7 +195,8 @@ void Game::update(const sf::Time& deltaTime)
     MTR_SCOPE("Game", "Game::update");
     auto deltaTimeInSeconds = deltaTime.asSeconds();
 
-    ImGui::ShowDemoWindow();
+    updateImGui(deltaTime);
+
     mAppStack.update(deltaTimeInSeconds);
 
     if (mAppStack.top() == State_ID::ExitGameState)
