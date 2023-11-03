@@ -9,6 +9,12 @@ VertexArray::VertexArray()
     GLCall(glGenVertexArrays(1, &mBufferId));
 }
 
+VertexArray::VertexArray(const VertexBuffer& vb, const BufferLayout& layout)
+    : VertexArray()
+{
+    setBuffer(vb, layout);
+}
+
 VertexArray::~VertexArray()
 {
     GLCall(glDeleteVertexArrays(1, &mBufferId));

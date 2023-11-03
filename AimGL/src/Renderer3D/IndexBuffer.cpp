@@ -34,7 +34,7 @@ void IndexBuffer::unbind() const
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
 }
 
-void IndexBuffer::setData(const unsigned int* data, unsigned count)
+void IndexBuffer::setBuffer(const unsigned int* data, unsigned count)
 {
     this->mCount = count;
     bind();

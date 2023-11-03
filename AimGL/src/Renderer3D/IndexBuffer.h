@@ -34,7 +34,7 @@ public:
      * @param data Array of unsigned ints containing buffer indexes
      * @param count Size of the Array
      */
-    void setData(const unsigned int* data, unsigned count);
+    void setBuffer(const unsigned int* data, unsigned count);
 
     /**
      * Returns the number of elements in the index buffer

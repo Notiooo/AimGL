@@ -9,6 +9,7 @@ class VertexArray : public Buffer
 {
 public:
     VertexArray();
+    VertexArray(const VertexBuffer& vb, const BufferLayout& layout);
     VertexArray(const VertexBuffer&) = delete;
     VertexArray(VertexArray&&) noexcept = default;
     VertexArray& operator=(const VertexArray&) = delete;
