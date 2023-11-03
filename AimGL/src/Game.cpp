@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "States/CustomStates/SampleState.h"
 #include "constants.h"
 #include "pch.h"
 
@@ -59,10 +60,10 @@ Game::Game()
     }
 
     // Setup all application-flow states
-    // mAppStack.saveState<...>(State_ID::GameState, *mGameWindow, mGameResources);
+    mAppStack.saveState<SampleState>(State_ID::SampleState, *mGameWindow);
 
     // Initial state of the statestack is TitleState
-    // mAppStack.push(State_ID::...);
+    mAppStack.push(State_ID::SampleState);
 }
 
 void Game::run()

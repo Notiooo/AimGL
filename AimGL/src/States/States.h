@@ -8,12 +8,11 @@ enum class State_ID
 {
     // === Application flow states === //
     None,
+    SampleState,
     GameState,
-    DeathState,
-    MainMenuState,
     PauseState,
 
-    ExitGameState,
+    ExitGameState
 };
 
 

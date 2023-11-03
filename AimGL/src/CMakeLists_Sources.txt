@@ -12,4 +12,5 @@ set(PROJECT_SOURCES
         Renderer3D/OpenglUtils.cpp
         States/State.cpp
         States/StateStack.cpp
+        States/CustomStates/SampleState.cpp
         )
