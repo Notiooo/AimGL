@@ -27,6 +27,9 @@ Game::Game()
     settings.minorVersion = 3;
     settings.depthBits = 24;
     settings.stencilBits = 8;
+#ifndef _DEBUG
+    settings.attributeFlags = sf::ContextSettings::Core;
+#endif
 
     // settings.attributeFlags = sf::ContextSettings::Core;
 
@@ -36,8 +39,9 @@ Game::Game()
     // the SFML graphics module and works without it. In the future, it would be useful to plug in
     // ImGui in such a way that it no longer relies on the SFML graphics module.
 
-    mGameWindow = std::make_unique<sf::Window>(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "AimGL",
-                                               sf::Style::Titlebar | sf::Style::Close, settings);
+    mGameWindow =
+        std::make_unique<WindowToRender>(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT), "AimGL",
+                                         sf::Style::Titlebar | sf::Style::Close, settings);
 
     mGameWindow->setFramerateLimit(FRAMES_PER_SECOND);
     mGameWindow->setActive(true);
@@ -153,14 +157,15 @@ void Game::updateImGuiMiniTrace()
 #endif
 }
 
-void Game::updateImGui(sf::Time time)
+void Game::updateImGui(sf::Time deltaTime)
 {
 #ifdef _DEBUG
 
     ImGui::SFML::Update(sf::Mouse::getPosition(*mGameWindow), sf::Vector2f(mGameWindow->getSize()),
-                        time);
+                        deltaTime);
 
     updateImGuiMiniTrace();
+    mAppStack.updateImGui(deltaTime.asSeconds());
 #endif
 }
 
@@ -215,7 +220,9 @@ void Game::render()
     mAppStack.draw(*mGameWindow);
 
 #ifdef _DEBUG
+    mGameWindow->pushGLStates();
     ImGui::SFML::Render();
+    mGameWindow->popGLStates();
 #endif
 
     // display to the window

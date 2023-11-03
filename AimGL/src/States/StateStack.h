@@ -94,6 +94,16 @@ public:
     void update(const float& deltaTime);
 
     /**
+     * \brief Updates the ImGui panels, every rendered frame.
+     * \param deltaTime the time that has passed since the game was last updated.
+     *
+     * Updates the state imgui panel logic at the top of the stack. If the state is
+     * transparent (returns true) then it also updates the state logic below it.
+     * The state below it is also checked for transparency and the process repeats itself.
+     */
+    void updateImGui(const float& deltaTime);
+
+    /**
      * \brief Draws the states in the stack to the given target.
      * \param target where drawable object should be drawn to.
      *

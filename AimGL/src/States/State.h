@@ -48,6 +48,12 @@ public:
      */
     virtual bool handleEvent(const sf::Event& event);
 
+    /**
+     * \brief Updates the imgui panel logic dependent, or independent of time, every rendered frame.
+     * \param deltaTime the time that has passed since the game was last updated.
+     */
+    virtual bool updateImGui(const float& deltaTime);
+
 protected:
     /**
      * \brief The state will be pushed out in the next iteration of the stack.

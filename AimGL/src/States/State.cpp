@@ -21,6 +21,15 @@ bool State::handleEvent(const sf::Event& event)
     return true;
 }
 
+bool State::updateImGui(const float& deltaTime)
+{
+    /*
+     * Set this state to transparent -- in other words
+     * allow States below in stack to be updated.
+     */
+    return true;
+}
+
 
 bool State::fixedUpdate(const float& deltaTime)
 {

@@ -1,6 +1,19 @@
 #pragma once
 
-#include <SFML/Window.hpp>
+
+/**
+ * By default, the game does not need the opengl graphics module. At this point it is used only
+ * debug for the purpose of drawing imgui. Therefore, a different window is used in Debug mode than
+ * in Release mode. This will be changed later.
+ **/
+#ifdef _DEBUG
+    #include <SFML/Graphics/RenderWindow.hpp>
+using WindowToRender = sf::RenderWindow;
+#else
+    #include <SFML/Window.hpp>
+using WindowToRender = sf::Window;
+#endif
+
 
 #include "Resources/Resources.h"
 #include "States/StateStack.h"
@@ -126,17 +139,17 @@ private:
     /**
      * @brief The window to which the game image should be drawn.
      */
-    std::unique_ptr<sf::Window> mGameWindow;
+    std::unique_ptr<WindowToRender> mGameWindow;
 
     bool isGameRunning = true;
 
     /**
-     * @brief TOOD: THIS
+     * @brief A clock used to determine the last time the fixedUpdate function was called
      */
     sf::Clock mFixedUpdateClock;
 
     /**
-     * @brief TODO: THIS
+     * @brief Time since the last call to the fixedUpdate function
      */
     sf::Time mTimeSinceLastFixedUpdate = sf::Time::Zero;
 

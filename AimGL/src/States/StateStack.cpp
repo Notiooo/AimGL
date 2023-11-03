@@ -69,6 +69,25 @@ void StateStack::update(const float& deltaTime)
     }
 }
 
+void StateStack::updateImGui(const float& deltaTime)
+{
+    applyChanges();
+    // Iterate from the highest state to the lowest state, and stop iterating if
+    // any state returns
+    for (auto beg = mStack.rbegin(), end = mStack.rend(); beg != end; ++beg)
+    {
+        // If a state is of "Transparent" type, then we iterate further
+        // But if it returns false, then we stop iterating.
+
+        // This allow some states to pause states under it.
+        // Like pause for example
+        if (!(*beg).state->updateImGui(deltaTime))
+        {
+            return;
+        }
+    }
+}
+
 void StateStack::draw(sf::Window& target) const
 {
     // Drawing starts from the lowest state to the highest state
