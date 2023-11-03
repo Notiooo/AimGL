@@ -146,3 +146,8 @@ State_ID StateStack::top() const
     }
     return mStack.back().id;
 }
+
+void StateStack::forceInstantClear()
+{
+    mStack.clear();
+}

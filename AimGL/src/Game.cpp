@@ -110,6 +110,7 @@ void Game::performGameLoop()
 
         mtr_flush();
     }
+    mAppStack.forceInstantClear();
 }
 
 void Game::fixedUpdateAtEqualIntervals()

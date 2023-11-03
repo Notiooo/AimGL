@@ -162,6 +162,11 @@ public:
      */
     [[nodiscard]] State_ID top() const;
 
+    /**
+     * \brief Forces statestack to remove all objects without using a queue (instantly).
+     */
+    void forceInstantClear();
+
 private:
     /**
      * \brief The queue that holds the operations to be performed on the stack.
