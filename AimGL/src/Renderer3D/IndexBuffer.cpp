@@ -1,7 +1,7 @@
 #include "IndexBuffer.h"
 #include "pch.h"
 
-#include "Renderer3D.h"
+#include "Renderer3D/OpenglUtils.h"
 
 IndexBuffer::IndexBuffer()
     : mCount(0)

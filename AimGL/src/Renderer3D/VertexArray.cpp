@@ -2,7 +2,7 @@
 #include "pch.h"
 
 #include "Renderer3D/BufferLayout.h"
-#include "Renderer3D/Renderer3D.h"
+#include "Renderer3D/OpenglUtils.h"
 
 VertexArray::VertexArray()
 {

@@ -1,5 +1,6 @@
 #pragma once
 #include "Buffer.h"
+#include "Renderer3D/OpenglUtils.h"
 
 /**
  * Vertex buffer object (VBO) allows vertex array data to be stored
