@@ -20,12 +20,19 @@ void StateStack::applyChanges()
         switch (change.operation)
         {
             case Perform::Push:
+                spdlog::info("[StateStack] Pushing state: {}", toString(change.stateID));
                 mStack.push_back({change.stateID, createState(change.stateID)});
                 break;
 
-            case Perform::Pop: mStack.pop_back(); break;
+            case Perform::Pop:
+                spdlog::info("[StateStack] Poping state from the top ({})", toString(top()));
+                mStack.pop_back();
+                break;
 
-            case Perform::Clear: mStack.clear(); break;
+            case Perform::Clear:
+                spdlog::info("[StateStack] Clearing the StateStack");
+                mStack.clear();
+                break;
         }
     }
     mChangesQueue.clear();
@@ -149,5 +156,6 @@ State_ID StateStack::top() const
 
 void StateStack::forceInstantClear()
 {
+    spdlog::warn("[StateStack] Statestack is forced to clear all its states instantly");
     mStack.clear();
 }

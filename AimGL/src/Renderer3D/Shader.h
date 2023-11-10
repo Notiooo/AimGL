@@ -63,14 +63,15 @@ public:
      */
     void unbind() const;
 
-    void setUniform(const std::string& name, float f1, float f2, float f3, float f4);
-    void setUniform(const std::string& name, float f1, float f2, float f3);
-    void setUniform(const std::string& name, float f1, float f2);
-    void setUniform(const std::string& name, float f1);
-    void setUniform(const std::string& name, int i1, int i2, int i3, int i4);
-    void setUniform(const std::string& name, int i1, int i2, int i3);
-    void setUniform(const std::string& name, int i1, int i2);
-    void setUniform(const std::string& name, int i1);
+    void setUniform(const std::string& name, glm::mat4 mat) const;
+    void setUniform(const std::string& name, float f1, float f2, float f3, float f4) const;
+    void setUniform(const std::string& name, float f1, float f2, float f3) const;
+    void setUniform(const std::string& name, float f1, float f2) const;
+    void setUniform(const std::string& name, float f1) const;
+    void setUniform(const std::string& name, int i1, int i2, int i3, int i4) const;
+    void setUniform(const std::string& name, int i1, int i2, int i3) const;
+    void setUniform(const std::string& name, int i1, int i2) const;
+    void setUniform(const std::string& name, int i1) const;
 
 
 private:
@@ -113,7 +114,7 @@ private:
      * \param name Name of uniform
      * \return Location, or -1 in case of failure
      */
-    unsigned getUniformLocation(const std::string& name);
+    unsigned getUniformLocation(const std::string& name) const;
 
     /**
      * \brief Creates a shader based on shader types and source code
@@ -138,7 +139,7 @@ private:
 
 private:
     unsigned int mRendererId;
-    std::unordered_map<std::string, int> mUniformLocationCache;
+    mutable std::unordered_map<std::string, int> mUniformLocationCache;
 };
 
 /**

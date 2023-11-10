@@ -28,47 +28,52 @@ void Shader::unbind() const
     GLCall(glUseProgram(0));
 }
 
-void Shader::setUniform(const std::string& name, float f1, float f2, float f3, float f4)
+void Shader::setUniform(const std::string& name, glm::mat4 mat) const
+{
+    GLCall(glUniformMatrix4fv(getUniformLocation(name), 1, GL_FALSE, glm::value_ptr(mat[0])));
+}
+
+void Shader::setUniform(const std::string& name, float f1, float f2, float f3, float f4) const
 {
     GLCall(glUniform4f(getUniformLocation(name), f1, f2, f3, f4));
 }
 
-void Shader::setUniform(const std::string& name, float f1, float f2, float f3)
+void Shader::setUniform(const std::string& name, float f1, float f2, float f3) const
 {
     GLCall(glUniform3f(getUniformLocation(name), f1, f2, f3));
 }
 
-void Shader::setUniform(const std::string& name, float f1, float f2)
+void Shader::setUniform(const std::string& name, float f1, float f2) const
 {
     GLCall(glUniform2f(getUniformLocation(name), f1, f2));
 }
 
-void Shader::setUniform(const std::string& name, float f1)
+void Shader::setUniform(const std::string& name, float f1) const
 {
     GLCall(glUniform1f(getUniformLocation(name), f1));
 }
 
-void Shader::setUniform(const std::string& name, int i1, int i2, int i3, int i4)
+void Shader::setUniform(const std::string& name, int i1, int i2, int i3, int i4) const
 {
     GLCall(glUniform4i(getUniformLocation(name), i1, i2, i3, i4));
 }
 
-void Shader::setUniform(const std::string& name, int i1, int i2, int i3)
+void Shader::setUniform(const std::string& name, int i1, int i2, int i3) const
 {
     GLCall(glUniform3i(getUniformLocation(name), i1, i2, i3));
 }
 
-void Shader::setUniform(const std::string& name, int i1, int i2)
+void Shader::setUniform(const std::string& name, int i1, int i2) const
 {
     GLCall(glUniform2i(getUniformLocation(name), i1, i2));
 }
 
-void Shader::setUniform(const std::string& name, int i1)
+void Shader::setUniform(const std::string& name, int i1) const
 {
     GLCall(glUniform1i(getUniformLocation(name), i1));
 }
 
-unsigned Shader::getUniformLocation(const std::string& name)
+unsigned Shader::getUniformLocation(const std::string& name) const
 {
     if (mUniformLocationCache.find(name) != mUniformLocationCache.end())
     {

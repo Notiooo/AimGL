@@ -1,5 +1,6 @@
 #include "Game.h"
-#include "States/CustomStates/SampleState.h"
+#include "States/CustomStates/ExitGameState.h"
+#include "States/CustomStates/LogoState.h"
 #include "constants.h"
 #include "pch.h"
 
@@ -59,11 +60,15 @@ Game::Game()
         throw std::runtime_error("Failed to initialize GLEW");
     }
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
     // Setup all application-flow states
-    mAppStack.saveState<SampleState>(State_ID::SampleState, *mGameWindow);
+    mAppStack.saveState<LogoState>(State_ID::LogoState, *mGameWindow);
+    mAppStack.saveState<ExitGameState>(State_ID::ExitGameState);
 
     // Initial state of the statestack is TitleState
-    mAppStack.push(State_ID::SampleState);
+    mAppStack.push(State_ID::LogoState);
 }
 
 void Game::run()
@@ -215,7 +220,7 @@ void Game::update(const sf::Time& deltaTime)
 void Game::render()
 {
     MTR_SCOPE("Game", "Game::render");
-    glClearColor(0.43f, 0.69f, 1.0f, 1.0f);
+    glClearColor(0.f, 0.f, 0.0f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     // draw the application

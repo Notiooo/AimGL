@@ -17,6 +17,8 @@ public:
         Quads
     };
 
+    Renderer3D(sf::Window& window);
+
     /**
      * Draws the data given in VertexArray, IndexBuffer to the screen using the interpretation given
      * in Shader.
@@ -29,4 +31,5 @@ public:
 
 private:
     unsigned toOpenGl(const DrawMode& drawMode) const;
+    sf::Window& mWindow;
 };

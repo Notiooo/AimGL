@@ -1,12 +1,21 @@
 #include "Renderer3D.h"
 #include "pch.h"
 
+Renderer3D::Renderer3D(sf::Window& window)
+    : mWindow(window)
+{
+}
+
 void Renderer3D::draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader,
                       const DrawMode& drawMode) const
 {
     shader.bind();
     va.bind();
     ib.bind();
+
+    glm::mat4 windowOrthoProjection = glm::ortho(0.f, static_cast<float>(mWindow.getSize().x), 0.f,
+                                                 static_cast<float>(mWindow.getSize().y));
+    shader.setUniform("windowOrthoProjection", windowOrthoProjection);
     GLCall(glDrawElements(toOpenGl(drawMode), ib.size(), GL_UNSIGNED_INT, nullptr));
 
 #ifdef _DEBUG

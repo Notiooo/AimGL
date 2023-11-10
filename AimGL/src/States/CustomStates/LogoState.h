@@ -1,22 +1,18 @@
 #pragma once
 
-#include "Renderer3D/BufferLayout.h"
-#include "Renderer3D/IndexBuffer.h"
 #include "Renderer3D/Renderer3D.h"
-#include "Renderer3D/Shader.h"
-#include "Renderer3D/Texture.h"
-#include "Renderer3D/VertexArray.h"
+#include "Renderer3D/Sprite2D.h"
 #include "States/State.h"
 
 class StateStack;
 
 /**
- * \brief  ....
+ * \brief Game state drawing the game logo
  */
-class SampleState : public State
+class LogoState : public State
 {
 public:
-    SampleState(StateStack& stack, sf::Window& window);
+    LogoState(StateStack& stack, sf::Window& window);
 
     /**
      * \brief Draws only this state to the passed target
@@ -50,11 +46,22 @@ public:
     bool updateImGui(const float& deltaTime) override;
 
 private:
-    Renderer3D render3D;
-    Texture mLogo;
-    VertexArray mVao;
-    VertexBuffer mVbo;
-    IndexBuffer mEbo;
-    BufferLayout mBufferLayout;
-    Shader mShader;
+    /**
+     * \brief This state is divided into two states:
+     * the state in which the logo fades in and
+     * the state in which the logo fades out.
+     */
+    enum class Phase
+    {
+        FadeIn,
+        Fadeout
+    };
+
+private:
+    Renderer3D mRenderer3D;
+    Texture mLogoTexture;
+    Sprite2D mLogo;
+    sf::Clock mClock;
+    sf::Window& mWindow;
+    Phase mPhase;
 };

@@ -14,5 +14,6 @@ set(PROJECT_SOURCES
         Renderer3D/Sprite2D.cpp
         States/State.cpp
         States/StateStack.cpp
-        States/CustomStates/SampleState.cpp
+        States/CustomStates/LogoState.cpp
+        States/CustomStates/ExitGameState.cpp
         )
