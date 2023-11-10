@@ -10,6 +10,7 @@ set(PROJECT_SOURCES
         Renderer3D/VertexArray.cpp
         Renderer3D/VertexBuffer.cpp
         Renderer3D/OpenglUtils.cpp
+        Renderer3D/Texture.cpp
         States/State.cpp
         States/StateStack.cpp
         States/CustomStates/SampleState.cpp

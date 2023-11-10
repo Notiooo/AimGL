@@ -14,11 +14,18 @@ target_precompile_headers(AimGLSrc PUBLIC pch.h)
 set(CUSTOM_INCLUDES_DIR ${CMAKE_CURRENT_BINARY_DIR}/custom_includes)
 file(MAKE_DIRECTORY ${CUSTOM_INCLUDES_DIR})
 
-configure_file(
-        ${FETCHCONTENT_BASE_DIR}/minitrace-src/minitrace.h
+set(CUSTOM_INCLUDES 
+    ${FETCHCONTENT_BASE_DIR}/minitrace-src/minitrace.h
+    ${FETCHCONTENT_BASE_DIR}/stb-src/stb_image.h
+)
+
+foreach(HEADER ${CUSTOM_INCLUDES})
+    configure_file(
+        ${HEADER}
         ${CUSTOM_INCLUDES_DIR}
         COPYONLY
-)
+    )
+endforeach()
 
 target_include_directories(AimGLSrc PUBLIC
         ${FETCHCONTENT_BASE_DIR}/glew-src/include
