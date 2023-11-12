@@ -16,4 +16,5 @@ set(PROJECT_SOURCES
         States/StateStack.cpp
         States/CustomStates/LogoState.cpp
         States/CustomStates/ExitGameState.cpp
+        Utils/Mouse.cpp
         )
