@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Renderer3D/Rectangle2D.h"
-#include "Renderer3D/Renderer3D.h"
-#include "Renderer3D/Sprite2D.h"
+#include "Renderer/Graphics/2D/Rectangle2D.h"
+#include "Renderer/Graphics/2D/Sprite2D.h"
+#include "Renderer/Renderer.h"
 #include "States/State.h"
 
 class StateStack;
@@ -60,7 +60,7 @@ private:
 
 private:
     sf::Window& mWindow;
-    Renderer3D mRenderer3D;
+    Renderer mRenderer;
     Texture mLogoTexture;
     Sprite2D mLogo;
     sf::Clock mClock;

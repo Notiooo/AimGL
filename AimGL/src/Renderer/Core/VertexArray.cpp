@@ -1,8 +1,8 @@
-#include "VertexArray.h"
+#include "Renderer/Core/VertexArray.h"
 #include "pch.h"
 
-#include "Renderer3D/BufferLayout.h"
-#include "Renderer3D/OpenglUtils.h"
+#include "Renderer/Core/Buffers/BufferLayout.h"
+#include "Renderer/Core/OpenglUtils.h"
 
 VertexArray::VertexArray()
 {

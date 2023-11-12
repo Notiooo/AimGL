@@ -1,9 +1,9 @@
 #pragma once
-#include "BufferLayout.h"
-#include "Renderer3D.h"
-#include "Shader.h"
-#include "VertexArray.h"
-#include "VertexBuffer.h"
+#include "Renderer/Core/Buffers/BufferLayout.h"
+#include "Renderer/Core/Buffers/VertexBuffer.h"
+#include "Renderer/Core/Shader.h"
+#include "Renderer/Core/VertexArray.h"
+#include "Renderer/Renderer.h"
 
 /**
  * \brief A representation of a 2d colored rectangle that has its own transformation.
@@ -35,7 +35,7 @@ public:
      * \brief Draws a rectangle to a given target
      * \param target The target to which the rectangle is drawn
      */
-    void draw(const Renderer3D& target) const;
+    void draw(const Renderer& target) const;
 
     /**
      * \brief Sets the position of the rectangle on the screen

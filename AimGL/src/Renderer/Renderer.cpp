@@ -1,13 +1,13 @@
-#include "Renderer3D.h"
+#include "Renderer/Renderer.h"
 #include "World/Camera.h"
 #include "pch.h"
 
-Renderer3D::Renderer3D(sf::Window& window)
+Renderer::Renderer(sf::Window& window)
     : mWindow(window)
 {
 }
 
-void Renderer3D::draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader,
+void Renderer::draw2D(const VertexArray& va, const IndexBuffer& ib, const Shader& shader,
                       const DrawMode& drawMode) const
 {
     shader.bind();
@@ -29,7 +29,7 @@ void Renderer3D::draw(const VertexArray& va, const IndexBuffer& ib, const Shader
 #endif
 }
 
-void Renderer3D::draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader,
+void Renderer::draw3D(const VertexArray& va, const IndexBuffer& ib, const Shader& shader,
                       const Camera& camera, const DrawMode& drawMode) const
 {
     shader.bind();
@@ -49,7 +49,7 @@ void Renderer3D::draw(const VertexArray& va, const IndexBuffer& ib, const Shader
 #endif
 }
 
-unsigned Renderer3D::toOpenGl(const Renderer3D::DrawMode& drawMode) const
+unsigned Renderer::toOpenGl(const Renderer::DrawMode& drawMode) const
 {
     switch (drawMode)
     {

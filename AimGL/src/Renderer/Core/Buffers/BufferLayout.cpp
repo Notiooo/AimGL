@@ -1,5 +1,5 @@
-#include "BufferLayout.h"
-#include "Renderer3D/OpenglUtils.h"
+#include "Renderer/Core/Buffers/BufferLayout.h"
+#include "Renderer/Core/OpenglUtils.h"
 #include "pch.h"
 
 unsigned BufferElement::sizeOfGLType(unsigned type)

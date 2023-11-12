@@ -42,11 +42,11 @@ void Sprite2D::initializeBuffers()
     mVAO.unbind();
 }
 
-void Sprite2D::draw(const Renderer3D& target) const
+void Sprite2D::draw(const Renderer& target) const
 {
     mShader.bind();
     mTexture.bind(0);
-    target.draw(mVAO, mEBO, mShader);
+    target.draw2D(mVAO, mEBO, mShader);
 }
 
 void Sprite2D::updateModel()

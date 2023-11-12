@@ -1,10 +1,10 @@
 #pragma once
-#include "BufferLayout.h"
-#include "Renderer3D.h"
-#include "Shader.h"
-#include "Texture.h"
-#include "VertexArray.h"
-#include "VertexBuffer.h"
+#include "Renderer/Core/Buffers/BufferLayout.h"
+#include "Renderer/Core/Buffers/VertexBuffer.h"
+#include "Renderer/Core/Shader.h"
+#include "Renderer/Core/VertexArray.h"
+#include "Renderer/Graphics/Texture.h"
+#include "Renderer/Renderer.h"
 
 /**
  * \brief A representation of a texture that has its own transformation.
@@ -34,7 +34,7 @@ public:
      * \brief Draws a sprite for a given target
      * \param target The target to which the sprite is drawn
      */
-    void draw(const Renderer3D& target) const;
+    void draw(const Renderer& target) const;
 
     /**
      * \brief Sets the position of the sprite on the screen

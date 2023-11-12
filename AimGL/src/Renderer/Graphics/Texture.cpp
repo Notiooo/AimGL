@@ -1,7 +1,7 @@
-#include "Texture.h"
+#include "Renderer/Graphics/Texture.h"
 #include "pch.h"
 
-#include "Renderer3D/OpenglUtils.h"
+#include "Renderer/Core/OpenglUtils.h"
 
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"

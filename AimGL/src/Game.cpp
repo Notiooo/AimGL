@@ -202,14 +202,14 @@ void Game::processEvents()
 void Game::fixedUpdate(const sf::Time& deltaTime)
 {
     MTR_SCOPE("Game", "Game::fixedUpdate");
-    auto deltaTimeInSeconds = deltaTime.asSeconds();
+    const auto deltaTimeInSeconds = deltaTime.asSeconds();
     mAppStack.fixedUpdate(deltaTimeInSeconds);
 }
 
 void Game::update(const sf::Time& deltaTime)
 {
     MTR_SCOPE("Game", "Game::update");
-    auto deltaTimeInSeconds = deltaTime.asSeconds();
+    const auto deltaTimeInSeconds = deltaTime.asSeconds();
     Mouse::update(deltaTimeInSeconds, *mGameWindow);
 
     updateImGui(deltaTime);

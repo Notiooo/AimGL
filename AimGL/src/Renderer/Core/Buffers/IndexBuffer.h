@@ -1,5 +1,5 @@
 #pragma once
-#include "Buffer.h"
+#include "Renderer/Core/Buffers/Buffer.h"
 
 /**
  * A higher level representation of OpenGL IndexBuffer which is an array of pointers into the vertex

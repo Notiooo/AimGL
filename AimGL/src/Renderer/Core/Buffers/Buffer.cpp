@@ -1,4 +1,4 @@
-#include "Buffer.h"
+#include "Renderer/Core/Buffers/Buffer.h"
 #include "pch.h"
 
 Buffer::Buffer(Buffer&& rhs) noexcept

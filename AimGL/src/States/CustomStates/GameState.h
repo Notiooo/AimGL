@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Renderer3D/Rectangle2D.h"
-#include "Renderer3D/Renderer3D.h"
-#include "Renderer3D/Sprite3D.h"
+#include "Renderer/Graphics/2D/Rectangle2D.h"
+#include "Renderer/Graphics/3D/Sprite3D.h"
+#include "Renderer/Renderer.h"
 #include "States/State.h"
 #include "World/Camera.h"
 #include "World/InfiniteGridFloor.h"
@@ -50,7 +50,7 @@ public:
 
 private:
     WindowToRender& mWindow;
-    Renderer3D mRenderer3D;
+    Renderer mRenderer;
     Texture mLogoTexture;
     Sprite3D mLogo;
     Camera mCamera;

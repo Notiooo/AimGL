@@ -1,10 +1,10 @@
 #pragma once
-#include "BufferLayout.h"
-#include "Renderer3D.h"
-#include "Shader.h"
-#include "Texture.h"
-#include "VertexArray.h"
-#include "VertexBuffer.h"
+#include "Renderer/Core/Buffers/BufferLayout.h"
+#include "Renderer/Core/Buffers/VertexBuffer.h"
+#include "Renderer/Core/Shader.h"
+#include "Renderer/Core/VertexArray.h"
+#include "Renderer/Graphics/Texture.h"
+#include "Renderer/Renderer.h"
 
 
 class Camera;
@@ -40,7 +40,7 @@ public:
      * \param target The target to which the sprite is drawn
      * \param camera A camera in 3D space that looks at this object
      */
-    void draw(const Renderer3D& target, const Camera& camera) const;
+    void draw(const Renderer& target, const Camera& camera) const;
 
     /**
      * \brief Sets the position of the sprite on the screen

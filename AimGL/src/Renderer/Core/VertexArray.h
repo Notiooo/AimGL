@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Buffer.h"
-#include "Renderer3D/VertexBuffer.h"
+#include "Renderer/Core/Buffers/Buffer.h"
+#include "Renderer/Core/Buffers/VertexBuffer.h"
 
 class BufferLayout;
 

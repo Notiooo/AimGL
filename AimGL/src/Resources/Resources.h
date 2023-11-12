@@ -1,8 +1,8 @@
 #pragma once
 
 #include "Resources/ResourceManager.h"
-#include <Renderer3D/Font.h>
-#include <Renderer3D/Texture.h>
+#include <Renderer/Graphics/Font.h>
+#include <Renderer/Graphics/Texture.h>
 
 
 class Player;

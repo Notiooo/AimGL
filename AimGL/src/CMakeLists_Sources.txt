@@ -1,19 +1,19 @@
 set(PROJECT_SOURCES
         Game.cpp
         pch.cpp
-        Renderer3D/Buffer.cpp
-        Renderer3D/BufferElement.cpp
-        Renderer3D/BufferLayout.cpp
-        Renderer3D/IndexBuffer.cpp
-        Renderer3D/Renderer3D.cpp
-        Renderer3D/Shader.cpp
-        Renderer3D/VertexArray.cpp
-        Renderer3D/VertexBuffer.cpp
-        Renderer3D/OpenglUtils.cpp
-        Renderer3D/Texture.cpp
-        Renderer3D/Sprite2D.cpp
-        Renderer3D/Sprite3D.cpp
-        Renderer3D/Rectangle2D.cpp
+        Renderer/Core/Buffers/Buffer.cpp
+        Renderer/Core/Buffers/BufferElement.cpp
+        Renderer/Core/Buffers/BufferLayout.cpp
+        Renderer/Core/Buffers/IndexBuffer.cpp
+        Renderer/Core/Buffers/VertexBuffer.cpp
+        Renderer/Core/Shader.cpp
+        Renderer/Core/VertexArray.cpp
+        Renderer/Core/OpenglUtils.cpp
+        Renderer/Graphics/Texture.cpp
+        Renderer/Graphics/2D/Sprite2D.cpp
+        Renderer/Graphics/3D/Sprite3D.cpp
+        Renderer/Graphics/2D/Rectangle2D.cpp
+        Renderer/Renderer.cpp
         States/State.cpp
         States/StateStack.cpp
         States/CustomStates/LogoState.cpp

@@ -1,5 +1,5 @@
 #pragma once
-#include "Renderer3D/BufferElement.h"
+#include "Renderer/Core/Buffers/BufferElement.h"
 #include <vector>
 
 /**

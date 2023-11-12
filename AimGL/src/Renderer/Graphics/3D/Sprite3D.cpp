@@ -46,11 +46,11 @@ void Sprite3D::initializeBuffers()
     mVAO.unbind();
 }
 
-void Sprite3D::draw(const Renderer3D& target, const Camera& camera) const
+void Sprite3D::draw(const Renderer& target, const Camera& camera) const
 {
     mShader.bind();
     mTexture.bind(0);
-    target.draw(mVAO, mEBO, mShader, camera);
+    target.draw3D(mVAO, mEBO, mShader, camera);
 }
 
 void Sprite3D::updateModel()

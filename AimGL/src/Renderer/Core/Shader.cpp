@@ -1,6 +1,6 @@
-#include "Shader.h"
+#include "Renderer/Core/Shader.h"
 
-#include "Renderer3D/OpenglUtils.h"
+#include "Renderer/Core/OpenglUtils.h"
 #include "pch.h"
 #include <fstream>
 

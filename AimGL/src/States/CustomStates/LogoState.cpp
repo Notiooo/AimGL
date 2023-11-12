@@ -5,7 +5,7 @@
 LogoState::LogoState(StateStack& stack, sf::Window& window)
     : State(stack)
     , mWindow(window)
-    , mRenderer3D(mWindow)
+    , mRenderer(mWindow)
     , mLogoTexture("resources/Textures/logo.png")
     , mLogo(mLogoTexture)
     , mPhase(Phase::FadeIn)
@@ -22,8 +22,8 @@ LogoState::LogoState(StateStack& stack, sf::Window& window)
 void LogoState::draw(sf::Window& target) const
 {
     MTR_SCOPE("LogoState", "LogoState::draw");
-    mRectangle.draw(mRenderer3D);
-    mLogo.draw(mRenderer3D);
+    mRectangle.draw(mRenderer);
+    mLogo.draw(mRenderer);
 }
 
 bool LogoState::fixedUpdate(const float& deltaTime)

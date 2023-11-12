@@ -41,9 +41,9 @@ void Rectangle2D::initializeBuffers()
     mVAO.unbind();
 }
 
-void Rectangle2D::draw(const Renderer3D& target) const
+void Rectangle2D::draw(const Renderer& target) const
 {
-    target.draw(mVAO, mEBO, mShader);
+    target.draw2D(mVAO, mEBO, mShader);
 }
 
 void Rectangle2D::updateColor() const

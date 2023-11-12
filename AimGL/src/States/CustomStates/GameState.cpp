@@ -1,5 +1,5 @@
 #include "GameState.h"
-#include "Renderer3D/Sprite3D.h"
+#include "Renderer/Graphics/3D/Sprite3D.h"
 #include "States/StateStack.h"
 #include "Utils/Mouse.h"
 #include "pch.h"
@@ -7,7 +7,7 @@
 GameState::GameState(StateStack& stack, WindowToRender& window)
     : State(stack)
     , mWindow(window)
-    , mRenderer3D(mWindow)
+    , mRenderer(mWindow)
     , mLogoTexture("resources/Textures/logo_background.png")
     , mLogo(mLogoTexture)
     , mCamera(window)
@@ -27,10 +27,10 @@ GameState::GameState(StateStack& stack, WindowToRender& window)
 void GameState::draw(sf::Window& target) const
 {
     MTR_SCOPE("GameState", "GameState::draw");
-    mGameBackground.draw(mRenderer3D);
+    mGameBackground.draw(mRenderer);
     mInfiniteGridFloor.draw(target, mCamera);
-    mLogo.draw(mRenderer3D, mCamera);
-    mPhaseInLogoColor.draw(mRenderer3D);
+    mLogo.draw(mRenderer, mCamera);
+    mPhaseInLogoColor.draw(mRenderer);
 }
 
 bool GameState::fixedUpdate(const float& deltaTime)

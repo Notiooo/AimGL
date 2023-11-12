@@ -1,5 +1,5 @@
 #pragma once
-#include "Renderer3D/Shader.h"
+#include "Renderer/Core/Shader.h"
 
 namespace sf
 {

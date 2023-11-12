@@ -1,5 +1,5 @@
-#include "VertexBuffer.h"
-#include "Renderer3D/OpenglUtils.h"
+#include "Renderer/Core/Buffers/VertexBuffer.h"
+#include "Renderer/Core/OpenglUtils.h"
 #include "pch.h"
 
 VertexBuffer::VertexBuffer()
