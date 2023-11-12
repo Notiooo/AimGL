@@ -17,4 +17,5 @@ set(PROJECT_SOURCES
         States/CustomStates/LogoState.cpp
         States/CustomStates/ExitGameState.cpp
         Utils/Mouse.cpp
+        World/Camera.cpp
         )
