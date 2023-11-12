@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Renderer3D/Rectangle2D.h"
 #include "Renderer3D/Renderer3D.h"
 #include "Renderer3D/Sprite2D.h"
 #include "States/State.h"
@@ -58,10 +59,11 @@ private:
     };
 
 private:
+    sf::Window& mWindow;
     Renderer3D mRenderer3D;
     Texture mLogoTexture;
     Sprite2D mLogo;
     sf::Clock mClock;
-    sf::Window& mWindow;
     Phase mPhase;
+    Rectangle2D mRectangle;
 };

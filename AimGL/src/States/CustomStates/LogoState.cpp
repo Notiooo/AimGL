@@ -5,33 +5,36 @@
 LogoState::LogoState(StateStack& stack, sf::Window& window)
     : State(stack)
     , mWindow(window)
+    , mRenderer3D(mWindow)
     , mLogoTexture("resources/Textures/logo.png")
     , mLogo(mLogoTexture)
-    , mRenderer3D(window)
     , mPhase(Phase::FadeIn)
+    , mRectangle({window.getSize().x, window.getSize().y}, {0.067f, 0.11f, 0.18f, 1.f})
 {
     mClock.restart();
     mLogo.setPosition(glm::vec2(mWindow.getSize().x / 2.f, mWindow.getSize().y / 2.f),
                       Sprite2D::Origin::Center);
     mLogo.setHeight(mWindow.getSize().y);
     mLogo.setOpacity(0);
+    mRectangle.setPosition({0, 0});
 }
 
 void LogoState::draw(sf::Window& target) const
 {
-    MTR_SCOPE("SampleState", "SampleState::draw");
+    MTR_SCOPE("LogoState", "LogoState::draw");
+    mRectangle.draw(mRenderer3D);
     mLogo.draw(mRenderer3D);
 }
 
 bool LogoState::fixedUpdate(const float& deltaTime)
 {
-    MTR_SCOPE("SampleState", "SampleState::fixedUpdate");
+    MTR_SCOPE("LogoState", "LogoState::fixedUpdate");
     return true;
 }
 
 bool LogoState::update(const float& deltaTime)
 {
-    MTR_SCOPE("SampleState", "SampleState::update");
+    MTR_SCOPE("LogoState", "LogoState::update");
     switch (mPhase)
     {
         case Phase::FadeIn:
@@ -57,13 +60,13 @@ bool LogoState::update(const float& deltaTime)
 
 bool LogoState::handleEvent(const sf::Event& event)
 {
-    MTR_SCOPE("SampleState", "SampleState::handleEvent");
+    MTR_SCOPE("LogoState", "LogoState::handleEvent");
     return true;
 }
 
 bool LogoState::updateImGui(const float& deltaTime)
 {
-    MTR_SCOPE("SampleState", "SampleState::updateImGui");
+    MTR_SCOPE("LogoState", "LogoState::updateImGui");
     ImGui::ShowDemoWindow();
     return true;
 }
