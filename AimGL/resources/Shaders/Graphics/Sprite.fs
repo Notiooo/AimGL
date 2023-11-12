@@ -4,7 +4,7 @@ in vec2 TexCoords;
 out vec4 color;
 
 uniform sampler2D spriteTexture;
-uniform float opacity = 0.f;
+uniform float opacity = 1.f;
 
 void main()
 {

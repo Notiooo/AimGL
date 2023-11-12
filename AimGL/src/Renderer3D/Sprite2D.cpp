@@ -8,6 +8,7 @@ Sprite2D::Sprite2D(const Texture& texture)
     , mPosition(0.0f)
     , mScale(1.0f)
     , mRotation(0.f)
+    , mDimensions({mTexture.width(), mTexture.height()})
 {
 
     initializeBuffers();
@@ -43,7 +44,6 @@ void Sprite2D::initializeBuffers()
 
 void Sprite2D::draw(const Renderer3D& target) const
 {
-    // Prepare transformations
     mShader.bind();
     mTexture.bind(0);
     target.draw(mVAO, mEBO, mShader);
@@ -53,8 +53,12 @@ void Sprite2D::updateModel()
 {
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(mPosition));
-    model = glm::rotate(model, glm::radians(mRotation), glm::vec3(0.0f, 0.0f, 1.0f));
-    model = glm::scale(model, glm::vec3(mScale, 1.0f));
+
+    // Negative mRotation makes it rotate clockwise for positive angles
+    model = glm::rotate(model, glm::radians(-mRotation), glm::vec3(0.0f, 0.0f, 1.0f));
+
+    // Dividing dimensions by two is needed as vertices are from -1 to 1
+    model = glm::scale(model, glm::vec3(mDimensions * mScale / 2.f, 1.0f));
     mShader.bind();
     mShader.setUniform("model", model);
     mShader.unbind();
@@ -73,35 +77,53 @@ void Sprite2D::setPosition(const glm::vec2& newPosition, Origin origin)
     updateModel();
 }
 
+void Sprite2D::showDebugImGui(std::string name)
+{
+    name = "[Sprite2D] " + name;
+    ImGui::Begin(name.c_str());
+    ImGui::SliderFloat2("Position", &mPosition[0], -1500.f, 1500.f);
+    ImGui::SliderFloat2("Dimensions", &mDimensions[0], -0.f, 1500.f);
+    ImGui::SliderFloat("Rotation", &mRotation, 0.0f, 360.f);
+    ImGui::SliderFloat("Scale", &mScale, -1.0f, 10.0f);
+    ImGui::SliderFloat("Opacity", &mOpacity, 0.0f, 1.0f);
+    ImGui::End();
+    updateModel();
+    updateOpacity();
+}
+
 void Sprite2D::setScale(float newScale)
 {
-    mScale = {mTexture.width(), mTexture.height()};
-    mScale *= newScale;
+    mScale = newScale;
+    updateModel();
 }
 
 void Sprite2D::setRotation(float angle)
 {
     mRotation = angle;
+    updateModel();
 }
 
-void Sprite2D::setOpacity(float opacity)
+void Sprite2D::updateOpacity() const
 {
-    mOpacity = opacity;
     mShader.bind();
     mShader.setUniform("opacity", mOpacity);
     mShader.unbind();
 }
 
+void Sprite2D::setOpacity(float opacity)
+{
+    mOpacity = opacity;
+    updateOpacity();
+}
+
 void Sprite2D::setWidth(float width)
 {
-    mScale = {width, width / mTexture.aspectRatio()};
-    mScale /= 2.f;
+    mDimensions = {width, width / mTexture.aspectRatio()};
     updateModel();
 }
 
 void Sprite2D::setHeight(float height)
 {
-    mScale = {height * mTexture.aspectRatio(), height};
-    mScale /= 2.f;
+    mDimensions = {height * mTexture.aspectRatio(), height};
     updateModel();
 }

@@ -4,6 +4,8 @@
 #include "Renderer3D/Shader.h"
 #include "Renderer3D/VertexArray.h"
 
+class Camera;
+
 /**
  * 3D Renderer allows to draw 3D objects to the screen using appropriate buffers and shaders
  */
@@ -28,6 +30,9 @@ public:
      */
     void draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader,
               const DrawMode& drawMode = DrawMode::Triangles) const;
+
+    void draw(const VertexArray& va, const IndexBuffer& ib, const Shader& shader,
+              const Camera& camera, const DrawMode& drawMode = DrawMode::Triangles) const;
 
 private:
     unsigned toOpenGl(const DrawMode& drawMode) const;

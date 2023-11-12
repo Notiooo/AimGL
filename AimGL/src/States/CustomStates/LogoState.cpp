@@ -51,7 +51,7 @@ bool LogoState::update(const float& deltaTime)
             if (mClock.getElapsedTime().asSeconds() > 4.f)
             {
                 requestPop();
-                requestPush(State_ID::ExitGameState);
+                requestPush(State_ID::GameState);
             }
             break;
     }

@@ -73,11 +73,23 @@ public:
      */
     void setHeight(float height);
 
+    /**
+     * \brief Displays a debug ImGui window that allows to change the internal
+     * variables of the sprite.
+     * \param name Optional name of the rectangle (it can be seen in the window name).
+     */
+    void showDebugImGui(std::string name = "");
+
 private:
     /**
      * \brief Updates the model in the shader (model of MVP)
      */
     void updateModel();
+
+    /**
+     * \brief Updates the opacity in the shader
+     */
+    void updateOpacity() const;
 
     /**
      * \brief Prepares buffers to work
@@ -92,7 +104,8 @@ private:
     Shader mShader;
     BufferLayout mBufferLayout;
     glm::vec3 mPosition;
-    glm::vec2 mScale;
+    float mScale;
+    glm::vec2 mDimensions;
     float mRotation;
     float mOpacity;
 };
