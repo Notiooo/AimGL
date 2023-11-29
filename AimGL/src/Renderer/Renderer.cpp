@@ -40,6 +40,7 @@ void Renderer::draw3D(const VertexArray& va, const IndexBuffer& ib, const Shader
     const auto projection = camera.projection();
     shader.setUniform("view", view);
     shader.setUniform("projection", projection);
+    shader.setUniform("cameraPosition", camera.cameraPosition());
     GLCall(glDrawElements(toOpenGl(drawMode), ib.size(), GL_UNSIGNED_INT, nullptr));
 
 #ifdef _DEBUG

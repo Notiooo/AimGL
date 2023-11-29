@@ -11,9 +11,10 @@ set(PROJECT_SOURCES
         Renderer/Core/OpenglUtils.cpp
         Renderer/Graphics/Texture.cpp
         Renderer/Graphics/2D/Sprite2D.cpp
-        Renderer/Graphics/3D/Sprite3D.cpp
         Renderer/Graphics/2D/Rectangle2D.cpp
+        Renderer/Graphics/3D/Sprite3D.cpp
         Renderer/Graphics/3D/Core/Mesh.cpp
+        Renderer/Graphics/3D/Model.cpp
         Renderer/Renderer.cpp
         Resources/ObjLoader.cpp
         States/State.cpp
