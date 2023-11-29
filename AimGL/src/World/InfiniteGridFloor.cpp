@@ -21,3 +21,14 @@ void InfiniteGridFloor::draw(sf::Window& target, const Camera& camera) const
     glDrawArrays(GL_TRIANGLES, 0, 6);
     mInfiniteGridShader.unbind();
 }
+
+void InfiniteGridFloor::showDebugImGui(std::string name)
+{
+    name = "[InfiniteGridFloor] " + name;
+    ImGui::Begin(name.c_str());
+    ImGui::SliderFloat("Far", &mFar, 0.0f, 5.f);
+    ImGui::End();
+    mInfiniteGridShader.bind();
+    mInfiniteGridShader.setUniform("far", mFar);
+    mInfiniteGridShader.unbind();
+}

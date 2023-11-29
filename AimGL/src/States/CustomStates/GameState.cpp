@@ -13,6 +13,8 @@ GameState::GameState(StateStack& stack, WindowToRender& window)
     , mCamera(window)
     , mGameBackground(glm::vec2(1280, 720.f), glm::vec4(0.85f, 0.85f, 0.85f, 1.f))
     , mPhaseInLogoColor({window.getSize().x, window.getSize().y}, {0.067f, 0.11f, 0.18f, 1.1f})
+    , tree("resources/Models/tree/tree.obj",
+           {{"resources/Models/tree/tree_combined.png", Texture::Type::Diffuse}})
 {
     Mouse::lockMouseAtCenter(mWindow);
     mLogo.setHeight(2.f);
@@ -29,6 +31,7 @@ void GameState::draw(sf::Window& target) const
     MTR_SCOPE("GameState", "GameState::draw");
     mGameBackground.draw(mRenderer);
     mInfiniteGridFloor.draw(target, mCamera);
+    tree.draw(mRenderer, mCamera);
     mLogo.draw(mRenderer, mCamera);
     mPhaseInLogoColor.draw(mRenderer);
 }
@@ -71,6 +74,7 @@ bool GameState::updateImGui(const float& deltaTime)
 {
     MTR_SCOPE("GameState", "GameState::updateImGui");
     mCamera.updateImGui();
+    mInfiniteGridFloor.showDebugImGui();
     ImGui::ShowDemoWindow();
     return true;
 }

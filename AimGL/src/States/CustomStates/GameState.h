@@ -7,6 +7,8 @@
 #include "World/Camera.h"
 #include "World/InfiniteGridFloor.h"
 
+#include <Renderer/Graphics/3D/Model.h>
+
 class StateStack;
 
 /**
@@ -58,4 +60,5 @@ private:
     sf::Clock mPhaseInClock;
     Rectangle2D mPhaseInLogoColor;
     InfiniteGridFloor mInfiniteGridFloor;
+    Model tree;
 };

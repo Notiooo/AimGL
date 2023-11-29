@@ -4,7 +4,7 @@
 out vec4 FragColor;
 
 float near = 0.01f;
-float far = 20.f;
+uniform float far = 5.f;
 
 in vec3 nearPoint;
 in vec3 farPoint;

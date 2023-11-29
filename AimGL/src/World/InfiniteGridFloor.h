@@ -25,6 +25,14 @@ public:
      */
     void draw(sf::Window& target, const Camera& camera) const;
 
+    /**
+     * \brief Displays a debug ImGui window that allows to change the internal
+     * variables of the Infinite Grid.
+     * \param name Optional name of the Infinite grid (it can be seen in the window name).
+     */
+    void showDebugImGui(std::string name = "");
+
 private:
     Shader mInfiniteGridShader;
+    float mFar = 5.f;
 };
