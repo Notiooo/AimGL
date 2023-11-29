@@ -65,6 +65,7 @@ public:
 
     void setUniform(const std::string& name, glm::mat4 mat) const;
     void setUniform(const std::string& name, glm::vec4 vec) const;
+    void setUniform(const std::string& name, glm::vec3 vec) const;
     void setUniform(const std::string& name, float f1, float f2, float f3, float f4) const;
     void setUniform(const std::string& name, float f1, float f2, float f3) const;
     void setUniform(const std::string& name, float f1, float f2) const;

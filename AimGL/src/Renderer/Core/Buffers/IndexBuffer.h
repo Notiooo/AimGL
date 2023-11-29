@@ -36,6 +36,15 @@ public:
      */
     void setBuffer(const unsigned int* data, unsigned count);
 
+
+    /**
+     * \brief Sets the data from vector and binds the buffer
+     * \tparam T Type of vector
+     * \param vector Vector having linearly arranged data of type T in memory
+     */
+    template<typename T>
+    void setBuffer(const std::vector<T>& vector);
+
     /**
      * Returns the number of elements in the index buffer
      * @return Size of the index buffer
@@ -45,3 +54,9 @@ public:
 private:
     unsigned int mCount;
 };
+
+template<typename T>
+void IndexBuffer::setBuffer(const std::vector<T>& vector)
+{
+    setBuffer(vector.data(), vector.size());
+}

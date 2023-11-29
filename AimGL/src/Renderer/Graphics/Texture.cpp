@@ -6,14 +6,15 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
-Texture::Texture(const std::string& filePath)
+Texture::Texture(const std::string& filePath, Type type)
     : mTextureId(0)
     , mFilePath(filePath)
-    , mData(nullptr)
     , mWidth(0)
     , mHeight(0)
     , mNrChannels(0)
+    , mTextureType(type)
 {
+    unsigned char* mData = nullptr;
     stbi_set_flip_vertically_on_load(true);
     mData = stbi_load(filePath.c_str(), &mWidth, &mHeight, &mNrChannels, 0);
     GLCall(glGenTextures(1, &mTextureId));
@@ -44,6 +45,23 @@ Texture::~Texture()
     GLCall(glDeleteTextures(1, &mTextureId));
 }
 
+Texture::Texture(const Texture& rhs)
+    : Texture(rhs.mFilePath)
+{
+    // TODO: Please improve me later!
+}
+
+Texture::Texture(Texture&& rhs) noexcept
+{
+    mTextureId = rhs.mTextureId;
+    rhs.mTextureId = 0;
+    mFilePath = std::move(rhs.mFilePath);
+    mAspectRatio = rhs.mAspectRatio;
+    mWidth = rhs.mWidth;
+    mHeight = rhs.mHeight;
+    mNrChannels = rhs.mNrChannels;
+}
+
 void Texture::bind(unsigned int slot) const
 {
     GLCall(glActiveTexture(GL_TEXTURE0 + slot));
@@ -68,4 +86,9 @@ int Texture::height() const
 float Texture::aspectRatio() const
 {
     return mAspectRatio;
+}
+
+Texture::Type Texture::type() const
+{
+    return mTextureType;
 }

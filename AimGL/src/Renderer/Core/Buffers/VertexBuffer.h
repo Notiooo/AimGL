@@ -59,7 +59,5 @@ VertexBuffer::VertexBuffer(const std::vector<T>& vector)
 template<typename T>
 void VertexBuffer::setBuffer(const std::vector<T>& vector)
 {
-    bind();
-    GLCall(glBindBuffer(GL_ARRAY_BUFFER, mBufferId));
-    GLCall(glBufferData(GL_ARRAY_BUFFER, vector.size(), vector.data(), GL_STATIC_DRAW));
+    setBuffer(vector.data(), vector.size() * sizeof(vector[0]));
 }
