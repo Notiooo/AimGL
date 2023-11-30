@@ -7,6 +7,7 @@
 #include "World/Camera.h"
 #include "World/InfiniteGridFloor.h"
 
+#include <Player/Player.h>
 #include <Renderer/Graphics/3D/Model.h>
 
 class StateStack;
@@ -52,13 +53,13 @@ public:
 
 private:
     WindowToRender& mWindow;
+    Player mPlayer;
     Renderer mRenderer;
     Texture mLogoTexture;
     Sprite3D mLogo;
-    Camera mCamera;
     Rectangle2D mGameBackground;
     sf::Clock mPhaseInClock;
     Rectangle2D mPhaseInLogoColor;
     InfiniteGridFloor mInfiniteGridFloor;
-    Model tree;
+    Model mTree;
 };

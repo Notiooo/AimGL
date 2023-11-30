@@ -16,7 +16,7 @@ Texture::Texture(const std::string& filePath, Type type)
 {
     unsigned char* mData = nullptr;
     stbi_set_flip_vertically_on_load(true);
-    mData = stbi_load(filePath.c_str(), &mWidth, &mHeight, &mNrChannels, 0);
+    mData = stbi_load(filePath.c_str(), &mWidth, &mHeight, &mNrChannels, 4);
     GLCall(glGenTextures(1, &mTextureId));
     GLCall(glBindTexture(GL_TEXTURE_2D, mTextureId));
 
@@ -27,7 +27,7 @@ Texture::Texture(const std::string& filePath, Type type)
 
     if (mData)
     {
-        GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, mWidth, mHeight, 0, GL_RGBA,
+        GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, mWidth, mHeight, 0, GL_RGBA,
                             GL_UNSIGNED_BYTE, mData));
         GLCall(glGenerateMipmap(GL_TEXTURE_2D));
         mAspectRatio = static_cast<float>(mWidth) / static_cast<float>(mHeight);
@@ -60,6 +60,7 @@ Texture::Texture(Texture&& rhs) noexcept
     mWidth = rhs.mWidth;
     mHeight = rhs.mHeight;
     mNrChannels = rhs.mNrChannels;
+    mTextureType = rhs.mTextureType;
 }
 
 void Texture::bind(unsigned int slot) const
