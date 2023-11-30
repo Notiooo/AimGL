@@ -1,6 +1,7 @@
 #pragma once
 #include "Game.h"
 
+#include <Renderer/Graphics/3D/Utils/Rotation3D.h>
 #include <glm/matrix.hpp>
 #include <glm/vec3.hpp>
 
@@ -99,6 +100,12 @@ public:
      */
     void updateImGui();
 
+    /**
+     * \brief Retrieves the current rotation of the object.
+     * \return The object's rotation as a Rotation3D instance.
+     */
+    Rotation3D rotation() const;
+
 private:
     /**
      * Handle keyboard behavior such as moving the camera inside the game
@@ -153,10 +160,7 @@ private:
     glm::vec3 mCameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
     glm::vec3 mCameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
     glm::vec3 mCameraFrontWithoutPitch = glm::vec3(0.0f, 0.0f, -1.0f);
-
-    float mYaw = -90.f;
-    float mPitch = 0.f;
-    float mRoll = 0.f;
+    Rotation3D mRotation{-90, 0, 0.f};
 
     float mCameraSpeed = 5.f;
     float mCameraSensitivity = 4.f;

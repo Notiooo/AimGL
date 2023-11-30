@@ -42,14 +42,14 @@ void Camera::handleMouseInputs(const float& deltaTime)
 void Camera::calculateCameraDirectionVector()
 {
     glm::vec3 direction;
-    direction.x = cos(glm::radians(mYaw)) * cos(glm::radians(mPitch));
-    direction.y = sin(glm::radians(mPitch));
-    direction.z = sin(glm::radians(mYaw)) * cos(glm::radians(mPitch));
+    direction.x = cos(glm::radians(mRotation.yaw)) * cos(glm::radians(mRotation.pitch));
+    direction.y = sin(glm::radians(mRotation.pitch));
+    direction.z = sin(glm::radians(mRotation.yaw)) * cos(glm::radians(mRotation.pitch));
     mCameraFront = glm::normalize(direction);
 
-    direction.x = cos(glm::radians(mYaw));
+    direction.x = cos(glm::radians(mRotation.yaw));
     direction.y = 0;
-    direction.z = sin(glm::radians(mYaw));
+    direction.z = sin(glm::radians(mRotation.yaw));
     mCameraFrontWithoutPitch = glm::normalize(direction);
 }
 
@@ -60,19 +60,19 @@ void Camera::calculateCameraAngles(const float& deltaTime)
     mouseOffset.x *= mCameraSensitivity * deltaTime;
     mouseOffset.y *= mCameraSensitivity * deltaTime * -1;
 
-    mYaw += mouseOffset.x;
-    mPitch += mouseOffset.y;
+    mRotation.yaw += mouseOffset.x;
+    mRotation.pitch += mouseOffset.y;
 }
 
 void Camera::keepNaturalPitchRanges()
 {
-    if (mPitch > 89.0f)
+    if (mRotation.pitch > 89.0f)
     {
-        mPitch = 89.0f;
+        mRotation.pitch = 89.0f;
     }
-    if (mPitch < -89.0f)
+    if (mRotation.pitch < -89.0f)
     {
-        mPitch = -89.0f;
+        mRotation.pitch = -89.0f;
     }
 }
 
@@ -150,6 +150,11 @@ void Camera::updateImGui()
     ImGui::Begin("Camera");
     ImGui::SliderFloat3("Translation", &mCameraPosition.x, 0.0f, 960.0f);
     ImGui::End();
+}
+
+Rotation3D Camera::rotation() const
+{
+    return mRotation;
 }
 
 glm::vec3 Camera::direction() const

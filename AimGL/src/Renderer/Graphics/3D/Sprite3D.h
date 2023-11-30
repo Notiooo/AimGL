@@ -5,6 +5,7 @@
 #include "Renderer/Core/VertexArray.h"
 #include "Renderer/Graphics/Texture.h"
 #include "Renderer/Renderer.h"
+#include "Utils/Rotation3D.h"
 
 
 class Camera;
@@ -56,11 +57,10 @@ public:
     void setScale(float newScale);
 
     /**
-     * \brief Rotates the sprite
-     * \param angle The angle by which the sprite is to be rotated
-     * \param axis Axes according to which the object should rotate
+     * \brief Sets the object's rotation.
+     * \param rotation The new rotation that the object should take
      */
-    void setRotation(float angle, glm::vec3 axis);
+    void setRotation(const Rotation3D& rotation);
 
     /**
      * \brief Sets the transparency of the sprite in range 0 - 1
@@ -113,6 +113,6 @@ private:
     glm::vec3 mPosition;
     glm::vec2 mScale;
     glm::vec2 mDimensionsNormalized;
-    std::pair<float, glm::vec3> mRotation;
+    Rotation3D mRotation;
     float mOpacity;
 };

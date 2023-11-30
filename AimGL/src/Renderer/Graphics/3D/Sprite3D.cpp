@@ -10,7 +10,6 @@ Sprite3D::Sprite3D(const Texture& texture)
     , mPosition(0.0f)
     , mScale(1.0f)
     , mDimensionsNormalized()
-    , mRotation(0.f, {0.f, 0.f, 1.f})
 {
     auto max = static_cast<float>(std::max(mTexture.width(), mTexture.height()));
     mDimensionsNormalized = {normalize(mTexture.width(), 0, max),
@@ -57,7 +56,7 @@ void Sprite3D::updateModel()
 {
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(mPosition));
-    model = glm::rotate(model, glm::radians(mRotation.first), mRotation.second);
+    model = mRotation.rotate(model);
     model = glm::scale(model, glm::vec3(mDimensionsNormalized * mScale / 2.f, 1.0f));
     mShader.bind();
     mShader.setUniform("model", model);
@@ -83,9 +82,9 @@ void Sprite3D::setScale(float newScale)
     updateModel();
 }
 
-void Sprite3D::setRotation(float angle, glm::vec3 axis)
+void Sprite3D::setRotation(const Rotation3D& rotation)
 {
-    mRotation = {angle, axis};
+    mRotation = rotation;
 }
 
 void Sprite3D::updateOpacity() const
@@ -125,8 +124,7 @@ void Sprite3D::showDebugImGui(std::string name)
     ImGui::Begin(name.c_str());
     ImGui::SliderFloat3("Position", &mPosition[0], -15, 15.f);
     ImGui::SliderFloat2("Dimensions Normalized", &mDimensionsNormalized[0], 0, 2.f);
-    ImGui::SliderFloat3("Rotation Axis", &mRotation.second[0], 0.0f, 1.f);
-    ImGui::SliderFloat("Rotation Angle", &mRotation.first, 0.f, 360.0f);
+    mRotation.imGuiRotationSlider();
     ImGui::SliderFloat2("Scale", &mScale[0], -4.0f, 4.0f);
     ImGui::SliderFloat("Opacity", &mOpacity, 0.0f, 1.0f);
     ImGui::End();

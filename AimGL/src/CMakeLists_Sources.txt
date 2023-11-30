@@ -15,6 +15,7 @@ set(PROJECT_SOURCES
         Renderer/Graphics/3D/Sprite3D.cpp
         Renderer/Graphics/3D/Core/Mesh.cpp
         Renderer/Graphics/3D/Model.cpp
+        Renderer/Graphics/3D/Utils/Rotation3D.cpp
         Renderer/Renderer.cpp
         Resources/ObjLoader.cpp
         States/State.cpp
