@@ -31,19 +31,68 @@ void Model::setPosition(const glm::vec3& newPosition, Origin origin)
     switch (origin)
     {
         case Origin::Center: break;
-        case Origin::LeftBottom: mPosition += mObjLoader.dimensions() / 2.f; break;
-        case Origin::CenterBottom: mPosition.y += mObjLoader.dimensions().y / 2.f; break;
+        case Origin::LeftBottom: mPosition += dimensions() / 2.f; break;
+        case Origin::CenterBottom: mPosition.y += dimensions().y / 2.f; break;
     }
     updateModel();
+}
+
+void Model::setScale(float scale)
+{
+    mScale = scale;
+    updateModel();
+}
+
+Rotation3D Model::rotation() const
+{
+    return mRotation;
+}
+
+void Model::setRotation(const Rotation3D& rotation)
+{
+    mRotation = rotation;
+}
+
+void Model::resetRotationOrigin()
+{
+    mRotationOrigin = {0, 0, 0};
+}
+
+void Model::setRotationOrigin(const glm::vec3& vec)
+{
+    mRotationOrigin = vec;
+}
+
+void Model::showDebugImGui(std::string name)
+{
+    name = "[Model] " + name;
+    ImGui::Begin(name.c_str());
+    ImGui::SliderFloat3("Position", &mPosition[0], -50, 50.f);
+    mRotation.imGuiRotationSlider();
+    ImGui::SliderFloat("Scale", &mScale, 0, 4.0f);
+    ImGui::End();
+    updateModel();
+}
+
+glm::vec3 Model::position() const
+{
+    return mPosition;
+}
+
+glm::vec3 Model::dimensions() const
+{
+    return mObjLoader.dimensions() * mScale;
 }
 
 void Model::updateModel()
 {
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(mPosition));
-    // TODO: Add rotation and scale to the model
-    // model = glm::rotate(model, glm::radians(mRotation.first), mRotation.second);
-    // model = glm::scale(model, glm::vec3(mDimensionsNormalized * mScale / 2.f, 1.0f));
+    model = glm::translate(model, -mRotationOrigin);
+    model = mRotation.rotate(model);
+    model = glm::translate(model, mRotationOrigin);
+    model = glm::scale(model, glm::vec3(mScale, mScale, mScale));
+
     mShader.bind();
     mShader.setUniform("model", model);
     mShader.unbind();
