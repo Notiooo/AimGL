@@ -26,5 +26,6 @@ set(PROJECT_SOURCES
         Player/Player.cpp
         World/Camera.cpp
         World/InfiniteGridFloor.cpp
+        World/GameObjects/Rifle.cpp
         Utils/Mouse.cpp
         )

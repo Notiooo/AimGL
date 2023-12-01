@@ -1,7 +1,7 @@
 #pragma once
 #include <Renderer/Graphics/2D/Sprite2D.h>
-#include <Renderer/Graphics/3D/Model.h>
 #include <World/Camera.h>
+#include <World/GameObjects/Rifle.h>
 
 class Renderer;
 class Camera;
@@ -114,16 +114,19 @@ private:
     bool isOnGround() const;
 
     /**
-     * \brief Updates the position of the player's weapon
-     * \param deltaTime the time that has passed since the game was last updated.
+     * \brief Manages walking sound effects based on the player's movement.
+     * \param playerWalkingVector glm::vec3 indicating the direction of player movement.
+     *  A zero vector suggests no movement, while a non-zero vector indicates movement.
      */
-    void updateGunPosition(const float& deltaTime);
+    void manageWalkingSounds(const glm::vec3& playerWalkingVector);
 
 private:
     Camera mCamera;
     glm::vec3 mPosition{0, 0, 0};
     glm::vec3 mVelocity{0, 0, 0};
-    Model mGun;
+    Rifle mRifle;
     Texture mCrosshairTexture;
     Sprite2D mCrosshair;
+    sf::SoundBuffer mSoundBuffer;
+    sf::Sound mWalkingSound;
 };

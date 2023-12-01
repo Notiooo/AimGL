@@ -3,6 +3,7 @@
 
 #include "Utils/Mouse.h"
 #include <SFML/Window/Keyboard.hpp>
+#include <Utils/Lerp.h>
 
 Camera::Camera(const WindowToRender& target)
     : mRenderTarget(target)
@@ -14,8 +15,20 @@ Camera::Camera(const WindowToRender& target)
         glm::radians(0.0f), static_cast<float>(targetSize.x / targetSize.y), 1.f, 100.f);
 }
 
+void Camera::updateShakeValues(const float& deltaTime)
+{
+    constexpr auto tolerance = 2.f;
+    mCurrentShakeValues = lerp(mCurrentShakeValues, mTargetShakeValues, deltaTime * 6.f);
+    auto difference = glm::abs(static_cast<glm::vec3>(mCurrentShakeValues - mTargetShakeValues));
+    if (difference.x <= tolerance && difference.y <= tolerance && difference.z <= tolerance)
+    {
+        mTargetShakeValues = {0, 0, 0};
+    }
+}
+
 void Camera::update(const float& deltaTime)
 {
+    updateShakeValues(deltaTime);
     handleMouseInputs(deltaTime);
 
     auto width = static_cast<float>(mRenderTarget.getSize().x);
@@ -41,15 +54,16 @@ void Camera::handleMouseInputs(const float& deltaTime)
 
 void Camera::calculateCameraDirectionVector()
 {
+    auto rotation = mRotation + mCurrentShakeValues;
     glm::vec3 direction;
-    direction.x = cos(glm::radians(mRotation.yaw)) * cos(glm::radians(mRotation.pitch));
-    direction.y = sin(glm::radians(mRotation.pitch));
-    direction.z = sin(glm::radians(mRotation.yaw)) * cos(glm::radians(mRotation.pitch));
+    direction.x = cos(glm::radians(rotation.yaw)) * cos(glm::radians(rotation.pitch));
+    direction.y = sin(glm::radians(rotation.pitch));
+    direction.z = sin(glm::radians(rotation.yaw)) * cos(glm::radians(rotation.pitch));
     mCameraFront = glm::normalize(direction);
 
-    direction.x = cos(glm::radians(mRotation.yaw));
+    direction.x = cos(glm::radians(rotation.yaw));
     direction.y = 0;
-    direction.z = sin(glm::radians(mRotation.yaw));
+    direction.z = sin(glm::radians(rotation.yaw));
     mCameraFrontWithoutPitch = glm::normalize(direction);
 }
 
@@ -155,6 +169,11 @@ void Camera::updateImGui()
 Rotation3D Camera::rotation() const
 {
     return mRotation;
+}
+
+void Camera::shake()
+{
+    mTargetShakeValues = {0.f, 4.f, 0.f};
 }
 
 glm::vec3 Camera::direction() const

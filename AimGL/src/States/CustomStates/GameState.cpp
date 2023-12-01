@@ -57,7 +57,6 @@ bool GameState::update(const float& deltaTime)
     {
         mPhaseInLogoColor.setOpacity(mPhaseInLogoColor.opacity() - deltaTime / 4.f);
     }
-    mTree.showDebugImGui("Tree");
     return true;
 }
 
@@ -82,5 +81,6 @@ bool GameState::updateImGui(const float& deltaTime)
     MTR_SCOPE("GameState", "GameState::updateImGui");
     mInfiniteGridFloor.showDebugImGui();
     mLogo.showDebugImGui("Logo");
+    mTree.showDebugImGui("Tree");
     return true;
 }

@@ -3,8 +3,25 @@
 /**
  * \brief Represents a 3D rotation using Euler angles.
  */
-struct Rotation3D
+class Rotation3D
 {
+    glm::vec3 mRotation{0, 0, 0};
+
+public:
+    Rotation3D();
+    Rotation3D(float yaw, float pitch, float roll);
+    Rotation3D(const Rotation3D& rotation);
+    Rotation3D& operator=(const Rotation3D& rotation);
+    bool operator==(const Rotation3D&) const;
+    Rotation3D operator+(const Rotation3D&) const;
+    Rotation3D operator-(const Rotation3D&) const;
+    Rotation3D operator*(const Rotation3D&) const;
+    Rotation3D& operator+=(const Rotation3D&);
+    Rotation3D& operator-=(const Rotation3D&);
+    Rotation3D& operator*=(const Rotation3D&);
+    friend Rotation3D operator*(const Rotation3D& lhs, float rhs);
+    explicit operator glm::vec3();
+
     /**
      * \brief Angles of Euler rotation.
      */
@@ -15,9 +32,9 @@ struct Rotation3D
         YAW
     };
 
-    float yaw{0};
-    float pitch{0};
-    float roll{0};
+    float& yaw = mRotation.x;
+    float& pitch = mRotation.y;
+    float& roll = mRotation.z;
 
     /**
      * \brief Applies rotation to a 3D model matrix in a specified order.
@@ -33,4 +50,18 @@ struct Rotation3D
      * \brief Renders an ImGui slider interface for adjusting the rotation.
      */
     void imGuiRotationSlider();
+
+private:
+    explicit Rotation3D(const glm::vec3& rotation);
 };
+
+
+inline Rotation3D operator*(const Rotation3D& lhs, float rhs)
+{
+    return Rotation3D(lhs.mRotation * rhs);
+}
+
+inline Rotation3D operator*(float lhs, const Rotation3D& rhs)
+{
+    return rhs * lhs;
+}

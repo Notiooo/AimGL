@@ -106,6 +106,11 @@ public:
      */
     Rotation3D rotation() const;
 
+    /**
+     * \brief Shakes the camera
+     */
+    void shake();
+
 private:
     /**
      * Handle keyboard behavior such as moving the camera inside the game
@@ -149,18 +154,27 @@ private:
     void calculateCameraAngles(const float& deltaTime);
 
     /**
-     * Calculates the camera's directional vector, which is the final\
+     * Calculates the camera's directional vector, which is the final
      * vector responsible for the camera's rotation.
      */
     void calculateCameraDirectionVector();
 
-    const WindowToRender& mRenderTarget;
+    /**
+     * \brief Updates the values responsible for shaking the camera
+     * \param deltaTime the time that has passed since the game was last updated.
+     */
+    void updateShakeValues(const float& deltaTime);
 
+private:
+    const WindowToRender& mRenderTarget;
     glm::vec3 mCameraPosition = glm::vec3(0, 0, 0);
     glm::vec3 mCameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
     glm::vec3 mCameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
     glm::vec3 mCameraFrontWithoutPitch = glm::vec3(0.0f, 0.0f, -1.0f);
     Rotation3D mRotation{-90, 0, 0.f};
+
+    Rotation3D mTargetShakeValues{0, 0, 0};
+    Rotation3D mCurrentShakeValues{0, 0, 0};
 
     float mCameraSpeed = 5.f;
     float mCameraSensitivity = 4.f;

@@ -4,51 +4,34 @@
 
 Player::Player(WindowToRender& window)
     : mCamera(window)
-    , mGun("resources/Models/ak47/ak47.obj",
-           {{"resources/Models/ak47/ak47-alternative.png", Texture::Type::Diffuse},
-            {"resources/Models/ak47/ak47-alternative-specular.png", Texture::Type::Specular}})
     , mCrosshairTexture("resources/Textures/crosshair.png")
     , mCrosshair(mCrosshairTexture)
+    , mRifle(mCamera)
 {
     mCrosshair.setPosition({window.getSize().x / 2.f, window.getSize().y / 2.f},
                            Sprite2D::Origin::Center);
     mCrosshair.setOpacity(0.8f);
     mCamera.cameraPosition({mPosition.x, mPosition.y + PLAYER_HEGIHT, mPosition.z});
-    mGun.setPosition(mCamera.cameraPosition(), Model::Origin::Center);
+    mSoundBuffer.loadFromFile("resources/Sounds/footsteps.wav");
+    mWalkingSound.setBuffer(mSoundBuffer);
+    mWalkingSound.setVolume(50);
+    mRifle.update(1);
 }
 
 void Player::draw(const Renderer& target) const
 {
     glDepthRange(0.0, 0.01);
-    mGun.draw(target, mCamera);
+    mRifle.draw(target);
     glDepthRange(0.0, 1.0);
 
     mCrosshair.draw(target);
-}
-
-void Player::updateGunPosition(const float& deltaTime)
-{
-    const glm::vec3 rotationOrigin = {0.3f, -0.2f, -0.35f};
-    const glm::vec3 targetPosition = {mPosition.x + rotationOrigin.x,
-                                      mPosition.y + PLAYER_HEGIHT * 5 / 8,
-                                      mPosition.z + rotationOrigin.z};
-
-    const auto gunPosition = lerp(mGun.position(), targetPosition, deltaTime * 30.f);
-    mGun.setPosition(gunPosition, Model::Origin::Center);
-    mGun.setRotationOrigin(rotationOrigin);
-
-    const auto gunTargetPitch =
-        lerp(mGun.rotation().pitch, mCamera.rotation().pitch, deltaTime * 20.f);
-    const auto gunTargetYaw =
-        lerp(mGun.rotation().yaw, -(mCamera.rotation().yaw + 90), deltaTime * 20.f);
-    mGun.setRotation({gunTargetYaw, gunTargetPitch, 0});
 }
 
 void Player::update(const float& deltaTime)
 {
     mCamera.cameraPosition({mPosition.x, mPosition.y + PLAYER_HEGIHT, mPosition.z});
     mCamera.update(deltaTime);
-    updateGunPosition(deltaTime);
+    mRifle.update(deltaTime);
 }
 
 void Player::updatePhysics(float deltaTime)
@@ -108,6 +91,27 @@ void Player::fixedUpdate(const float& deltaTime)
     updatePhysics(deltaTime);
 }
 
+void Player::manageWalkingSounds(const glm::vec3& playerWalkingVector)
+{
+    constexpr auto noDirection = glm::vec3(0.0f, 0.0f, 0.0f);
+    switch (mWalkingSound.getStatus())
+    {
+        case sf::Sound::Status::Playing:
+            if (playerWalkingVector == noDirection or not isOnGround())
+            {
+                mWalkingSound.stop();
+            }
+            break;
+        case sf::Sound::Status::Paused:
+        case sf::Sound::Status::Stopped:
+            if (playerWalkingVector != noDirection and isOnGround())
+            {
+                mWalkingSound.play();
+            }
+            break;
+    }
+}
+
 void Player::handleMovementKeyboardInputs(const float& deltaTime)
 {
     auto ACCELERATION_RATIO = 0.1f;
@@ -129,6 +133,7 @@ void Player::handleMovementKeyboardInputs(const float& deltaTime)
     {
         direction -= mCamera.rightDirectionWithoutPitch();
     }
+    manageWalkingSounds(direction);
 
     if (glm::length(direction) > 0.0f)
     {
@@ -152,6 +157,7 @@ void Player::handleEvent(const sf::Event& event)
     {
         case sf::Keyboard::Space: tryJump(); break;
     }
+    mRifle.handleEvent(event);
 }
 
 Camera& Player::camera()
