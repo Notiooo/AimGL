@@ -22,6 +22,8 @@
 #include <imgui.h>
 
 // SFML
+#include <SFML/Audio/Sound.hpp>
+#include <SFML/Audio/SoundBuffer.hpp>
 #include <SFML/OpenGL.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window.hpp>

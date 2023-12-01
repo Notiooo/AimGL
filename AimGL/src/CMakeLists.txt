@@ -35,9 +35,13 @@ target_include_directories(AimGLSrc PUBLIC
         ${CUSTOM_INCLUDES_DIR}
 )
 
+
+set_target_properties(sfml-audio PROPERTIES CXX_STANDARD 98 CXX_STANDARD_REQUIRED YES CXX_EXTENSIONS NO)
+
 target_link_libraries(AimGLSrc
         PUBLIC
         sfml-graphics
+        sfml-audio
         ImGui-SFML::ImGui-SFML
         glew_s
         glm
@@ -53,10 +57,20 @@ add_custom_command(TARGET AimGLSrc POST_BUILD
         $<TARGET_FILE:sfml-graphics>
         $<TARGET_FILE:sfml-window>
         $<TARGET_FILE:sfml-system>
+        $<TARGET_FILE:sfml-audio>
         $<TARGET_FILE:spdlog>
         $<TARGET_FILE:minitrace>
         $<TARGET_FILE_DIR:AimGLSrc>
 )
+
+# Copy OpenAL32.dll for SFML AUDIO
+if (WIN32 AND SFML_BUILD_AUDIO)
+    add_custom_command(TARGET AimGLSrc POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            ${FETCHCONTENT_BASE_DIR}/sfml-src/extlibs/bin/x64/openal32.dll
+            $<TARGET_FILE_DIR:AimGLSrc>
+    )
+endif()
 
 # Remove previous game resources
 
