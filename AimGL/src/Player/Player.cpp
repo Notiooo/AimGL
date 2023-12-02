@@ -20,10 +20,7 @@ Player::Player(WindowToRender& window)
 
 void Player::draw(const Renderer& target) const
 {
-    glDepthRange(0.0, 0.01);
     mRifle.draw(target);
-    glDepthRange(0.0, 1.0);
-
     mCrosshair.draw(target);
 }
 

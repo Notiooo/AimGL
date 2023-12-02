@@ -8,8 +8,11 @@ int main()
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 #endif
 
-#ifdef MTR_ENABLED&& defined(_DEBUG)
+#if defined(_DEBUG)
+    spdlog::set_level(spdlog::level::debug);
+    #ifdef MTR_ENABLED
     spdlog::warn("MiniTrace is enabled!");
+    #endif
 #endif
 
     try

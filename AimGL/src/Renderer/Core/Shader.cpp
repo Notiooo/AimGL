@@ -13,6 +13,21 @@ Shader::Shader(std::initializer_list<ShaderSource> shaders)
     GLCall(glUseProgram(mRendererId));
 }
 
+Shader::Shader(Shader&& rhs) noexcept
+    : mRendererId(rhs.mRendererId)
+    , mUniformLocationCache(std::move(rhs.mUniformLocationCache))
+{
+    rhs.mRendererId = 0;
+}
+
+Shader& Shader::operator=(Shader&& rhs) noexcept
+{
+    mRendererId = rhs.mRendererId;
+    mUniformLocationCache = std::move(rhs.mUniformLocationCache);
+    rhs.mRendererId = 0;
+    return *this;
+}
+
 Shader::~Shader()
 {
     GLCall(glDeleteProgram(mRendererId));
@@ -93,7 +108,7 @@ unsigned Shader::getUniformLocation(const std::string& name) const
     GLCall(auto location = glGetUniformLocation(mRendererId, name.c_str()));
     if (location == -1)
     {
-        spdlog::warn("No uniform with name {} exist", name);
+        spdlog::debug("No uniform with name {} exist", name);
     }
 
     mUniformLocationCache[name] = location;

@@ -16,7 +16,13 @@ Rifle::Rifle(Camera& camera)
 
 void Rifle::draw(const Renderer& target) const
 {
+    glDepthRange(0.0, 0.01);
     mGun.draw(target, mCamera);
+    glDepthRange(0.0, 1.0);
+    if (mLatelyShotRay.has_value())
+    {
+        mLatelyShotRay.value().draw(target, mCamera);
+    }
 }
 
 void Rifle::update(const float& deltaTime)
@@ -58,5 +64,6 @@ void Rifle::handleEvent(const sf::Event& event)
         mCurrentRecoil = std::min(mCurrentRecoil, RECOIL_OFFSET_MAX);
         mCamera.shake();
         mGunShotSound.play();
+        mLatelyShotRay.emplace(mCamera.cameraPosition(), mCamera.direction());
     }
 }

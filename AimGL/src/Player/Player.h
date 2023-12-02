@@ -1,7 +1,7 @@
 #pragma once
 #include <Renderer/Graphics/2D/Sprite2D.h>
 #include <World/Camera.h>
-#include <World/GameObjects/Rifle.h>
+#include <World/Scene/GameObjects/Rifle.h>
 
 class Renderer;
 class Camera;

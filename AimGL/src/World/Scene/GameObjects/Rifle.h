@@ -1,4 +1,5 @@
 #pragma once
+#include "World/Physics/Ray.h"
 #include <Renderer/Graphics/3D/Model.h>
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
@@ -36,6 +37,7 @@ public:
      */
     void handleEvent(const sf::Event& event);
 
+
 private:
     /**
      * \brief Updates logic related to attaching rifle to camera
@@ -51,4 +53,6 @@ private:
     float mCurrentRecoil{0};
     sf::SoundBuffer mSoundBuffer;
     sf::Sound mGunShotSound;
+    std::optional<Ray> mLatelyShotRay;
+    std::vector<std::function<void(Ray)>> mRaySubscribers;
 };

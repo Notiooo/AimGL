@@ -50,6 +50,25 @@ void Renderer::draw3D(const VertexArray& va, const IndexBuffer& ib, const Shader
 #endif
 }
 
+void Renderer::draw3D(const VertexArray& va, int numberOfVertices, const Shader& shader,
+                      const Camera& camera, const DrawMode& drawMode) const
+{
+    shader.bind();
+    va.bind();
+
+    const auto view = camera.view();
+    const auto projection = camera.projection();
+    shader.setUniform("view", view);
+    shader.setUniform("projection", projection);
+    shader.setUniform("cameraPosition", camera.cameraPosition());
+    GLCall(glDrawArrays(toOpenGl(drawMode), 0, numberOfVertices));
+
+#ifdef _DEBUG
+    shader.unbind();
+    va.unbind();
+#endif
+}
+
 unsigned Renderer::toOpenGl(const Renderer::DrawMode& drawMode) const
 {
     switch (drawMode)
