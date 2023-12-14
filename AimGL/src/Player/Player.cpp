@@ -2,11 +2,11 @@
 #include "Utils/Lerp.h"
 #include "pch.h"
 
-Player::Player(WindowToRender& window)
+Player::Player(WindowToRender& window, ColliderRegister& colliderRegister)
     : mCamera(window)
     , mCrosshairTexture("resources/Textures/crosshair.png")
     , mCrosshair(mCrosshairTexture)
-    , mRifle(mCamera)
+    , mRifle(mCamera, colliderRegister)
 {
     mCrosshair.setPosition({window.getSize().x / 2.f, window.getSize().y / 2.f},
                            Sprite2D::Origin::Center);

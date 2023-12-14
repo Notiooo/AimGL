@@ -9,7 +9,7 @@
 GameState::GameState(StateStack& stack, WindowToRender& window)
     : State(stack)
     , mWindow(window)
-    , mPlayer(window)
+    , mPlayer(window, mColliderRegister)
     , mRenderer(mWindow)
     , mLogoTexture("resources/Textures/logo_background.png")
     , mLogo(mLogoTexture)
@@ -45,6 +45,7 @@ bool GameState::fixedUpdate(const float& deltaTime)
 {
     MTR_SCOPE("GameState", "GameState::fixedUpdate");
     mPlayer.fixedUpdate(deltaTime);
+    mColliderRegister.updateAllCollisions();
     return true;
 }
 

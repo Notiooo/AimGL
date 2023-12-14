@@ -1,6 +1,6 @@
 #pragma once
-#include "World/Physics/Ray.h"
-#include <Renderer/Graphics/3D/Model.h>
+#include "Renderer/Graphics/3D/Model.h"
+#include "World/Physics/Drawable/Ray.h"
 #include <SFML/Audio/Sound.hpp>
 #include <SFML/Audio/SoundBuffer.hpp>
 
@@ -16,8 +16,9 @@ public:
     /**
      * \brief Constructor of Rifle class
      * \param camera The camera to which the weapon should be attached
+     * \param colliderRegister Register in which all collisions on the scene should be located
      */
-    explicit Rifle(Camera& camera);
+    Rifle(Camera& camera, ColliderRegister& colliderRegister);
 
     /**
      * \brief Draws a Rifle to a given target
@@ -55,4 +56,5 @@ private:
     sf::Sound mGunShotSound;
     std::optional<Ray> mLatelyShotRay;
     std::vector<std::function<void(Ray)>> mRaySubscribers;
+    ColliderRegister& mColliderRegister;
 };

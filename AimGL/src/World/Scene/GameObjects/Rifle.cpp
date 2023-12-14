@@ -4,11 +4,12 @@
 #include <Utils/Lerp.h>
 #include <World/Camera.h>
 
-Rifle::Rifle(Camera& camera)
+Rifle::Rifle(Camera& camera, ColliderRegister& colliderRegister)
     : mCamera(camera)
     , mGun("resources/Models/ak47/ak47.obj",
            {{"resources/Models/ak47/ak47-alternative.png", Texture::Type::Diffuse},
             {"resources/Models/ak47/ak47-alternative-specular.png", Texture::Type::Specular}})
+    , mColliderRegister(colliderRegister)
 {
     mSoundBuffer.loadFromFile("resources/Sounds/gunshot.wav");
     mGunShotSound.setBuffer(mSoundBuffer);
@@ -64,6 +65,7 @@ void Rifle::handleEvent(const sf::Event& event)
         mCurrentRecoil = std::min(mCurrentRecoil, RECOIL_OFFSET_MAX);
         mCamera.shake();
         mGunShotSound.play();
-        mLatelyShotRay.emplace(mCamera.cameraPosition(), mCamera.direction());
+        mLatelyShotRay.emplace(mColliderRegister, mCamera.cameraPosition(), mCamera.direction());
+        mLatelyShotRay.value().colliderTag(ColliderTag::GunShot);
     }
 }

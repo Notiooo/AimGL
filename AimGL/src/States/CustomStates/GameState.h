@@ -9,6 +9,7 @@
 
 #include <Player/Player.h>
 #include <Renderer/Graphics/3D/Model.h>
+#include <World/Physics/ColliderRegister.h>
 
 class StateStack;
 
@@ -53,6 +54,7 @@ public:
 
 private:
     WindowToRender& mWindow;
+    ColliderRegister mColliderRegister;
     Player mPlayer;
     Renderer mRenderer;
     Texture mLogoTexture;

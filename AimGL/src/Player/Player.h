@@ -20,8 +20,9 @@ public:
     /**
      * \brief Player class constructor
      * \param window The window into which the player's eye view is rendered
+     * \param colliderRegister Register in which all collisions on the scene should be located
      */
-    explicit Player(WindowToRender& window);
+    Player(WindowToRender& window, ColliderRegister& colliderRegister);
 
     static constexpr auto PLAYER_HEGIHT = 0.8f;
     static constexpr auto PLAYER_MAX_HORIZONTAL_SPEED = 5.f;
