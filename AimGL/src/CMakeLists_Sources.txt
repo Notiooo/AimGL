@@ -30,5 +30,9 @@ set(PROJECT_SOURCES
         World/Physics/Ray.cpp
         World/Physics/Collider.cpp
         World/Physics/ColliderRegister.cpp
+        World/Physics/RayCollider.cpp
+        World/Physics/RectangleCollider.cpp
+        World/Physics/SphereCollider.cpp
+        World/Physics/Collisions.cpp
         Utils/Mouse.cpp
         )
