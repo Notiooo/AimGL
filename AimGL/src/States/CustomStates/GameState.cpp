@@ -28,6 +28,15 @@ GameState::GameState(StateStack& stack, WindowToRender& window)
     mGameBackground.setPosition({0, 0});
     mPhaseInLogoColor.setPosition({0, 0});
     mPhaseInClock.restart();
+
+    std::vector<glm::vec3> samplePreviewTargetsPositons = {
+        {2, 2, 2}, {2, 1, 2}, {2, 3, 2}, {2.5, 2, 2.6}, {3, 3, 3},
+        {3, 2, 1}, {1, 2, 3}, {0, 3, 2}, {0, 1, 1},     {0, 2, 4}};
+    for (auto& position: samplePreviewTargetsPositons)
+    {
+        auto test = std::make_unique<PreviewTarget>(mColliderRegister, position);
+        mPreviewTargets.push_back(std::move(test));
+    }
 }
 
 void GameState::draw(sf::Window& target) const
@@ -38,6 +47,11 @@ void GameState::draw(sf::Window& target) const
     mTree.draw(mRenderer, mPlayer.camera());
     mLogo.draw(mRenderer, mPlayer.camera());
     mPhaseInLogoColor.draw(mRenderer);
+
+    for (auto& previewTarget: mPreviewTargets)
+    {
+        previewTarget->draw(mRenderer, mPlayer.camera());
+    }
     mPlayer.draw(mRenderer);
 }
 
@@ -52,6 +66,10 @@ bool GameState::fixedUpdate(const float& deltaTime)
 bool GameState::update(const float& deltaTime)
 {
     MTR_SCOPE("GameState", "GameState::update");
+    for (auto& previewTarget: mPreviewTargets)
+    {
+        previewTarget->update(deltaTime);
+    }
     mPlayer.update(deltaTime);
 
     if (mPhaseInLogoColor.opacity() > 0)

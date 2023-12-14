@@ -1,10 +1,9 @@
 #pragma once
 #include "Game.h"
 
-#include <Renderer/Graphics/3D/Utils/Rotation3D.h>
+#include "Renderer/Graphics/3D/Utils/Rotation3D.h"
 #include <glm/matrix.hpp>
 #include <glm/vec3.hpp>
-
 
 /**
  * An in-game camera through which the player views gameplay.
@@ -12,7 +11,7 @@
 class Camera
 {
 public:
-    Camera(const WindowToRender& target);
+    explicit Camera(const WindowToRender& target);
 
     /**
      * \brief Updates the camera logic at equal intervals independent of the frame rate.

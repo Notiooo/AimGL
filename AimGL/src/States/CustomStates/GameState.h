@@ -10,6 +10,7 @@
 #include <Player/Player.h>
 #include <Renderer/Graphics/3D/Model.h>
 #include <World/Physics/ColliderRegister.h>
+#include <World/Scene/GameObjects/PreviewTarget.h>
 
 class StateStack;
 
@@ -64,4 +65,5 @@ private:
     Rectangle2D mPhaseInLogoColor;
     InfiniteGridFloor mInfiniteGridFloor;
     Model mTree;
+    std::vector<std::unique_ptr<PreviewTarget>> mPreviewTargets;
 };

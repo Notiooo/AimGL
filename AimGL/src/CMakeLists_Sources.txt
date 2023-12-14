@@ -27,6 +27,7 @@ set(PROJECT_SOURCES
         World/Camera.cpp
         World/InfiniteGridFloor.cpp
         World/Scene/GameObjects/Rifle.cpp
+        World/Scene/GameObjects/PreviewTarget.cpp
         World/Physics/Drawable/AABB.cpp
         World/Physics/Drawable/Ray.cpp
         World/Physics/Drawable/DrawableCollider.cpp
