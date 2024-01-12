@@ -1,6 +1,7 @@
 set(PROJECT_SOURCES
         Game.cpp
         pch.cpp
+        constants.cpp
         Renderer/Core/Buffers/Buffer.cpp
         Renderer/Core/Buffers/BufferElement.cpp
         Renderer/Core/Buffers/BufferLayout.cpp

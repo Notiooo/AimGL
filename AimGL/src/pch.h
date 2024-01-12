@@ -32,3 +32,6 @@
 // Logging
 #include "minitrace.h"
 #include "spdlog/spdlog.h"
+
+// Other
+#include <result.hpp>

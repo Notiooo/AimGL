@@ -3,6 +3,8 @@
 
 #include "Renderer/Renderer.h"
 
+#include <constants.h>
+
 void AABB::updateBuffers()
 {
     std::vector<float> vertices = {
@@ -42,7 +44,10 @@ AABB::AABB(ColliderRegister& colliderRegister, const glm::vec3& min, const glm::
 
 void AABB::draw(const Renderer& target, const Camera& camera) const
 {
-    target.draw3D(mVAO, mEBO, mShader, camera, Renderer::DrawMode::Lines);
+    if (DRAW_COLLIDERS)
+    {
+        target.draw3D(mVAO, mEBO, mShader, camera, Renderer::DrawMode::Lines);
+    }
 }
 
 void AABB::setPosition(const glm::vec3& position)

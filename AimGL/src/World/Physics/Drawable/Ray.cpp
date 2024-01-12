@@ -3,6 +3,8 @@
 
 #include "Renderer/Renderer.h"
 
+#include <constants.h>
+
 Ray::Ray(ColliderRegister& colliderRegister, const glm::vec3& origin, const glm::vec3& direction,
          float length)
     : DrawableCollider(colliderRegister, origin, direction, length)
@@ -24,6 +26,9 @@ Ray::Ray(ColliderRegister& colliderRegister, const glm::vec3& origin, const glm:
 
 void Ray::draw(const Renderer& target, const Camera& camera) const
 {
-    constexpr auto numberOfVertices = 6;
-    target.draw3D(mVAO, numberOfVertices, mShader, camera, Renderer::DrawMode::Lines);
+    if (DRAW_COLLIDERS)
+    {
+        constexpr auto numberOfVertices = 6;
+        target.draw3D(mVAO, numberOfVertices, mShader, camera, Renderer::DrawMode::Lines);
+    }
 }
