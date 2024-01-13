@@ -57,4 +57,6 @@ private:
     std::optional<Ray> mLatelyShotRay;
     std::vector<std::function<void(Ray)>> mRaySubscribers;
     ColliderRegister& mColliderRegister;
+    sf::Clock mShotRayClock;
+    sf::Time mShotRayDeleteTime = sf::seconds(0.5);
 };

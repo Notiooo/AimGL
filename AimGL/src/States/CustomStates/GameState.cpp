@@ -12,32 +12,19 @@ GameState::GameState(StateStack& stack, WindowToRender& window)
     , mWindow(window)
     , mPlayer(window, mColliderRegister)
     , mRenderer(mWindow)
-    , mLogoTexture("resources/Textures/logo_background.png")
-    , mLogo(mLogoTexture)
     , mGameBackground(glm::vec2(1280, 720.f), glm::vec4(0.85f, 0.85f, 0.85f, 1.f))
     , mPhaseInLogoColor({window.getSize().x, window.getSize().y}, {0.067f, 0.11f, 0.18f, 1.1f})
-    , mTree("resources/Models/tree/tree.obj",
-            {{"resources/Models/tree/tree_combined.png", Texture::Type::Diffuse}})
+    , mShootingRange(mColliderRegister, {-2, 0, 5.5})
+    , mSidewayMovingTargetsRange(mColliderRegister, {3, 0, 5.5})
+    , mWelcomeScreenTexture("resources/Textures/welcome-screen.png")
+    , mWelcomeScreen(mWelcomeScreenTexture)
 {
     Mouse::lockMouseAtCenter(mWindow);
-    mTree.setScale(0.2f);
-    mTree.setPosition({4, 0, 4}, Model::Origin::CenterBottom);
-    mLogo.setHeight(2.f);
-    mLogo.setPosition(glm::vec3(4, 0, 4), Sprite3D::Origin::LeftBottom);
-    mLogo.setRotation({225.f, 0.f, 0});
-    mLogo.setOpacity(1);
+    mWelcomeScreen.setScale(2);
+    mWelcomeScreen.setPosition({0, 1, -2}, Sprite3D::Origin::Center);
     mGameBackground.setPosition({0, 0});
     mPhaseInLogoColor.setPosition({0, 0});
     mPhaseInClock.restart();
-
-    std::vector<glm::vec3> samplePreviewTargetsPositons = {
-        {2, 2, 2}, {2, 1, 2}, {2, 3, 2}, {2.5, 2, 2.6}, {3, 3, 3},
-        {3, 2, 1}, {1, 2, 3}, {0, 3, 2}, {0, 1, 1},     {0, 2, 4}};
-    for (auto& position: samplePreviewTargetsPositons)
-    {
-        auto test = std::make_unique<Target>(mColliderRegister, position);
-        mPreviewTargets.push_back(std::move(test));
-    }
 }
 
 void GameState::draw(sf::Window& target) const
@@ -45,14 +32,10 @@ void GameState::draw(sf::Window& target) const
     MTR_SCOPE("GameState", "GameState::draw");
     mGameBackground.draw(mRenderer);
     mInfiniteGridFloor.draw(target, mPlayer.camera());
-    mTree.draw(mRenderer, mPlayer.camera());
-    mLogo.draw(mRenderer, mPlayer.camera());
+    mWelcomeScreen.draw(mRenderer, mPlayer.camera());
     mPhaseInLogoColor.draw(mRenderer);
-
-    for (auto& previewTarget: mPreviewTargets)
-    {
-        previewTarget->draw(mRenderer, mPlayer.camera());
-    }
+    mShootingRange.draw(mRenderer, mPlayer.camera());
+    mSidewayMovingTargetsRange.draw(mRenderer, mPlayer.camera());
     mPlayer.draw(mRenderer);
 }
 
@@ -67,11 +50,9 @@ bool GameState::fixedUpdate(const float& deltaTime)
 bool GameState::update(const float& deltaTime)
 {
     MTR_SCOPE("GameState", "GameState::update");
-    for (auto& previewTarget: mPreviewTargets)
-    {
-        previewTarget->update(deltaTime);
-    }
     mPlayer.update(deltaTime);
+    mShootingRange.update(deltaTime);
+    mSidewayMovingTargetsRange.update(deltaTime);
 
     if (mPhaseInLogoColor.opacity() > 0)
     {
@@ -84,6 +65,8 @@ bool GameState::handleEvent(const sf::Event& event)
 {
     MTR_SCOPE("GameState", "GameState::handleEvent");
     mPlayer.handleEvent(event);
+    mShootingRange.handleEvent(event);
+    mSidewayMovingTargetsRange.handleEvent(event);
 
     if (event.type == sf::Event::KeyPressed)
     {

@@ -8,9 +8,9 @@
 #include "World/InfiniteGridFloor.h"
 
 #include <Player/Player.h>
-#include <Renderer/Graphics/3D/Model.h>
 #include <World/Physics/ColliderRegister.h>
-#include <World/Scene/GameObjects/Target.h>
+#include <World/Scene/GameObjects/ShootingRange.h>
+#include <World/Scene/GameObjects/SidewayMovingTargetsRange.h>
 
 class StateStack;
 
@@ -83,13 +83,13 @@ private:
     ColliderRegister mColliderRegister;
     Player mPlayer;
     Renderer mRenderer;
-    Texture mLogoTexture;
-    Sprite3D mLogo;
     Rectangle2D mGameBackground;
     sf::Clock mPhaseInClock;
     Rectangle2D mPhaseInLogoColor;
     InfiniteGridFloor mInfiniteGridFloor;
-    Model mTree;
-    std::vector<std::unique_ptr<Target>> mPreviewTargets;
+    ShootingRange mShootingRange;
+    SidewayMovingTargetsRange mSidewayMovingTargetsRange;
+    Texture mWelcomeScreenTexture;
+    Sprite3D mWelcomeScreen;
     bool mDrawImgui{true};
 };

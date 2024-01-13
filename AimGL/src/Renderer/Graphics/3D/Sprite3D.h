@@ -114,5 +114,5 @@ private:
     glm::vec2 mScale;
     glm::vec2 mDimensionsNormalized;
     Rotation3D mRotation;
-    float mOpacity;
+    float mOpacity{1};
 };

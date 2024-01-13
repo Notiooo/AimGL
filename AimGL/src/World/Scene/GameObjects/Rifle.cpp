@@ -29,6 +29,10 @@ void Rifle::draw(const Renderer& target) const
 void Rifle::update(const float& deltaTime)
 {
     updateAttachToCamera(deltaTime);
+    if (mLatelyShotRay.has_value() and mShotRayClock.getElapsedTime() > mShotRayDeleteTime)
+    {
+        mLatelyShotRay.reset();
+    }
 }
 
 void Rifle::updateAttachToCamera(const float& deltaTime)
@@ -67,5 +71,6 @@ void Rifle::handleEvent(const sf::Event& event)
         mGunShotSound.play();
         mLatelyShotRay.emplace(mColliderRegister, mCamera.cameraPosition(), mCamera.direction());
         mLatelyShotRay.value().colliderTag(ColliderTag::GunShot);
+        mShotRayClock.restart();
     }
 }

@@ -20,7 +20,7 @@ public:
     Rotation3D& operator-=(const Rotation3D&);
     Rotation3D& operator*=(const Rotation3D&);
     friend Rotation3D operator*(const Rotation3D& lhs, float rhs);
-    explicit operator glm::vec3();
+    explicit operator glm::vec3() const;
 
     /**
      * \brief Angles of Euler rotation.

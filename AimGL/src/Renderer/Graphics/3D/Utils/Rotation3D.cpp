@@ -87,7 +87,7 @@ Rotation3D& Rotation3D::operator*=(const Rotation3D& rhs)
     return *this;
 }
 
-Rotation3D::operator glm::vec<3, float>()
+Rotation3D::operator glm::vec<3, float>() const
 {
     return mRotation;
 }

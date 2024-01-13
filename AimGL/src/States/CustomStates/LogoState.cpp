@@ -67,6 +67,5 @@ bool LogoState::handleEvent(const sf::Event& event)
 bool LogoState::updateImGui(const float& deltaTime)
 {
     MTR_SCOPE("LogoState", "LogoState::updateImGui");
-    ImGui::ShowDemoWindow();
     return true;
 }
