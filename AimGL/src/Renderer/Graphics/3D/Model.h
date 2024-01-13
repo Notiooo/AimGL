@@ -100,6 +100,18 @@ public:
      */
     void showDebugImGui(std::string name = "");
 
+    /**
+     * \brief Get a modifiable reference to the entity's mesh.
+     * \return Mesh reference.
+     */
+    Mesh& mesh();
+
+    /**
+     * \brief Get a read-only reference to the entity's mesh.
+     * \return Constant Mesh reference.
+     */
+    const Mesh& mesh() const;
+
 private:
     /**
      * \brief Updates the model in the shader

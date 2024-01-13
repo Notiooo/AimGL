@@ -56,3 +56,19 @@ void Mesh::draw(const Renderer& target, const Camera& camera, const Shader& shad
     }
     target.draw3D(mVAO, mEBO, shader, camera);
 }
+
+void Mesh::setTexture(Texture&& newTexture)
+{
+    auto it = std::find_if(textures.begin(), textures.end(),
+                           [&newTexture](const auto& texture)
+                           {
+                               return texture.type() == newTexture.type();
+                           });
+
+    if (it != textures.end())
+    {
+        *it = std::move(newTexture);
+    }
+
+    textures.push_back(std::move(newTexture));
+}

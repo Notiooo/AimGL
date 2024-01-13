@@ -31,6 +31,12 @@ public:
      */
     void draw(const Renderer& target, const Camera& camera, const Shader& shader) const;
 
+    /**
+     * \brief Sets a new texture for the object.
+     * \param newTexture The new texture to be applied.
+     */
+    void setTexture(Texture&& newTexture);
+
 private:
     /**
      * \brief Sets the specified texture to the shader

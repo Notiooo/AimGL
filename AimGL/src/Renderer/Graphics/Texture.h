@@ -42,6 +42,12 @@ public:
     Texture(Texture&& rhs) noexcept;
 
     /**
+     * \brief Move assignment of texture class
+     * \param rhs Other r-value texture object
+     */
+    Texture& operator=(Texture&& rhs) noexcept;
+
+    /**
      * \brief Binds a texture for rendering
      * \param slot Slot to which the texture will be binded (can be obtained from the shader level)
      */

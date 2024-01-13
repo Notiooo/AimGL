@@ -74,6 +74,16 @@ void Model::showDebugImGui(std::string name)
     updateModel();
 }
 
+Mesh& Model::mesh()
+{
+    return *mMesh;
+}
+
+const Mesh& Model::mesh() const
+{
+    return *mMesh;
+}
+
 glm::vec3 Model::position() const
 {
     return mPosition;

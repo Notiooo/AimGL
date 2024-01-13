@@ -29,6 +29,7 @@ set(PROJECT_SOURCES
         World/InfiniteGridFloor.cpp
         World/Scene/GameObjects/Rifle.cpp
         World/Scene/GameObjects/PreviewTarget.cpp
+        World/Scene/GameObjects/ButtonStand.cpp
         World/Physics/Drawable/AABB.cpp
         World/Physics/Drawable/Ray.cpp
         World/Physics/Drawable/DrawableCollider.cpp

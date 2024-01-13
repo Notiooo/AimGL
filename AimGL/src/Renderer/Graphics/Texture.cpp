@@ -63,6 +63,25 @@ Texture::Texture(Texture&& rhs) noexcept
     mTextureType = rhs.mTextureType;
 }
 
+Texture& Texture::operator=(Texture&& rhs) noexcept
+{
+    if (this != &rhs)
+    {
+        GLCall(glDeleteTextures(1, &mTextureId));
+
+        mTextureId = rhs.mTextureId;
+        rhs.mTextureId = 0;
+        mFilePath = std::move(rhs.mFilePath);
+        mAspectRatio = rhs.mAspectRatio;
+        mWidth = rhs.mWidth;
+        mHeight = rhs.mHeight;
+        mNrChannels = rhs.mNrChannels;
+        mTextureType = rhs.mTextureType;
+    }
+
+    return *this;
+}
+
 void Texture::bind(unsigned int slot) const
 {
     GLCall(glActiveTexture(GL_TEXTURE0 + slot));

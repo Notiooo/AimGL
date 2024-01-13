@@ -6,7 +6,7 @@ in vec3 FragmentNormal;
 in vec3 FragPos;
 in vec2 TexCoords;
 
-uniform vec3 lightPos = vec3(3, 3, 3);
+uniform vec3 lightPos = vec3(0, 8, -15);
 vec3 lightAmbient = vec3(0.3f, 0.3f, 0.3f);
 vec3 lightDiffuse = vec3(0.6f, 0.6f, 0.6f);
 vec3 lightSpecular = vec3(1.0f, 1.0f, 1.0f);
