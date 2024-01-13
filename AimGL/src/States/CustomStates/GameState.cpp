@@ -64,6 +64,12 @@ bool GameState::update(const float& deltaTime)
 bool GameState::handleEvent(const sf::Event& event)
 {
     MTR_SCOPE("GameState", "GameState::handleEvent");
+    Mouse::handleFirstPersonBehaviour(event, mWindow);
+    if (not Mouse::isMouseLocked())
+    {
+        return true;
+    }
+
     mPlayer.handleEvent(event);
     mShootingRange.handleEvent(event);
     mSidewayMovingTargetsRange.handleEvent(event);
@@ -72,13 +78,13 @@ bool GameState::handleEvent(const sf::Event& event)
     {
         switch (event.key.code)
         {
-            case sf::Keyboard::Escape: Mouse::unlockMouse(mWindow); break;
+            case sf::Keyboard::Escape: requestPush(State_ID::PauseState); break;
             case sf::Keyboard::F1: switchWireframe(); break;
             case sf::Keyboard::F2: switchDrawingColliders(); break;
             case sf::Keyboard::F3: switchDrawingImgui(); break;
+            case sf::Keyboard::F4: Mouse::unlockMouse(mWindow); break;
         }
     }
-    Mouse::handleFirstPersonBehaviour(event, mWindow);
     return true;
 }
 
@@ -153,7 +159,6 @@ bool GameState::updateImGui(const float& deltaTime)
             updateImguiDebugMenu();
             updateImGuiDebugInstructionText();
         }
-        mInfiniteGridFloor.showDebugImGui();
     }
     return true;
 }

@@ -24,6 +24,7 @@ set(PROJECT_SOURCES
         States/CustomStates/LogoState.cpp
         States/CustomStates/ExitGameState.cpp
         States/CustomStates/GameState.cpp
+        States/CustomStates/PauseState.cpp
         Player/Player.cpp
         World/Camera.cpp
         World/InfiniteGridFloor.cpp

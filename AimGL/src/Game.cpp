@@ -2,6 +2,7 @@
 #include "States/CustomStates/ExitGameState.h"
 #include "States/CustomStates/GameState.h"
 #include "States/CustomStates/LogoState.h"
+#include "States/CustomStates/PauseState.h"
 #include "Utils/Mouse.h"
 #include "constants.h"
 #include "pch.h"
@@ -70,6 +71,7 @@ Game::Game()
     mAppStack.saveState<LogoState>(State_ID::LogoState, *mGameWindow);
     mAppStack.saveState<ExitGameState>(State_ID::ExitGameState);
     mAppStack.saveState<GameState>(State_ID::GameState, *mGameWindow);
+    mAppStack.saveState<PauseState>(State_ID::PauseState, *mGameWindow);
 
     // Initial state of the statestack is TitleState
     mAppStack.push(State_ID::LogoState);
