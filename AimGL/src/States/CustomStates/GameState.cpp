@@ -35,7 +35,7 @@ GameState::GameState(StateStack& stack, WindowToRender& window)
         {3, 2, 1}, {1, 2, 3}, {0, 3, 2}, {0, 1, 1},     {0, 2, 4}};
     for (auto& position: samplePreviewTargetsPositons)
     {
-        auto test = std::make_unique<PreviewTarget>(mColliderRegister, position);
+        auto test = std::make_unique<Target>(mColliderRegister, position);
         mPreviewTargets.push_back(std::move(test));
     }
 }

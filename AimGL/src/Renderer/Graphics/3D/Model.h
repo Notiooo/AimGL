@@ -27,6 +27,8 @@ public:
      * \param textures Path to the texture files and types that should be applied to the object.
      */
     explicit Model(const std::string& objFilePath, const std::vector<TextureType>& textures = {});
+    Model(const Model& rhs);
+    Model& operator=(const Model& rhs);
 
     /**
      * \brief Determines the point at which the model has its position (0,0,0)
@@ -120,10 +122,11 @@ private:
 
 private:
     Shader mShader;
-    ObjLoader mObjLoader;
     std::unique_ptr<Mesh> mMesh;
     glm::vec3 mPosition{0, 0, 0};
     glm::vec3 mRotationOrigin{0, 0, 0};
     float mScale{1};
     Rotation3D mRotation;
+    glm::vec3 mDimensions{};
+    glm::mat4 mLastCalculatedModel{};
 };

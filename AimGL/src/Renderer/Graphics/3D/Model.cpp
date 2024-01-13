@@ -4,8 +4,8 @@
 Model::Model(const std::string& objFilePath, const std::vector<TextureType>& texturesToLoad)
     : mShader{{ShaderType::VertexShader, "resources/Shaders/Graphics/Model/ModelTextured.vs"},
               {ShaderType::FragmentShader, "resources/Shaders/Graphics/Model/ModelTextured.fs"}}
-    , mObjLoader(objFilePath, {ObjLoader::Flags::ForceCenterAtOrigin})
 {
+    ObjLoader objLoader(objFilePath, {ObjLoader::Flags::ForceCenterAtOrigin});
     // TODO: Storing texture this way is not the best idea as the texture
     // TODO: may be duplicated as many times as this object is loaded! :<<
     std::vector<Texture> textures;
@@ -15,13 +15,44 @@ Model::Model(const std::string& objFilePath, const std::vector<TextureType>& tex
         const auto& [texturePath, textureType] = textureToLoad;
         textures.emplace_back(texturePath, textureType);
     }
-    mMesh = std::make_unique<Mesh>(std::move(mObjLoader.vertices()),
-                                   std::move(mObjLoader.indices()), std::move(textures));
+    mMesh = std::make_unique<Mesh>(std::move(objLoader.vertices()), std::move(objLoader.indices()),
+                                   std::move(textures));
+    mDimensions = objLoader.dimensions();
     setPosition({0, 0, 0});
+}
+
+Model::Model(const Model& rhs)
+    : mShader(rhs.mShader.filePaths())
+    , mMesh(std::make_unique<Mesh>(*rhs.mMesh))
+    , mPosition(rhs.mPosition)
+    , mRotationOrigin(rhs.mRotationOrigin)
+    , mScale(rhs.mScale)
+    , mRotation(rhs.mRotation)
+    , mDimensions(rhs.mDimensions)
+    , mLastCalculatedModel(rhs.mLastCalculatedModel)
+{
+    setPosition(mPosition);
+}
+
+Model& Model::operator=(const Model& rhs)
+{
+    // mShader = // TODO: Hmm it should be copied later on.
+    mMesh = std::make_unique<Mesh>(*rhs.mMesh);// it completely copies new one
+    mPosition = rhs.mPosition;
+    mRotationOrigin = rhs.mRotationOrigin;
+    mScale = rhs.mScale;
+    mRotation = rhs.mRotation;
+    mDimensions = rhs.mDimensions;
+    mLastCalculatedModel = rhs.mLastCalculatedModel;
+    setPosition(mPosition);
+    return *this;
 }
 
 void Model::draw(const Renderer& target, const Camera& camera) const
 {
+    mShader.bind();
+    mShader.setUniform("model", mLastCalculatedModel);
+    mShader.unbind();
     mMesh->draw(target, camera, mShader);
 }
 
@@ -51,6 +82,7 @@ Rotation3D Model::rotation() const
 void Model::setRotation(const Rotation3D& rotation)
 {
     mRotation = rotation;
+    updateModel();
 }
 
 void Model::resetRotationOrigin()
@@ -91,19 +123,15 @@ glm::vec3 Model::position() const
 
 glm::vec3 Model::dimensions() const
 {
-    return mObjLoader.dimensions() * mScale;
+    return mDimensions * mScale;
 }
 
 void Model::updateModel()
 {
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, glm::vec3(mPosition));
-    model = glm::translate(model, -mRotationOrigin);
-    model = mRotation.rotate(model);
-    model = glm::translate(model, mRotationOrigin);
-    model = glm::scale(model, glm::vec3(mScale, mScale, mScale));
-
-    mShader.bind();
-    mShader.setUniform("model", model);
-    mShader.unbind();
+    mLastCalculatedModel = glm::mat4(1.0f);
+    mLastCalculatedModel = glm::translate(mLastCalculatedModel, glm::vec3(mPosition));
+    mLastCalculatedModel = glm::translate(mLastCalculatedModel, -mRotationOrigin);
+    mLastCalculatedModel = mRotation.rotate(mLastCalculatedModel);
+    mLastCalculatedModel = glm::translate(mLastCalculatedModel, mRotationOrigin);
+    mLastCalculatedModel = glm::scale(mLastCalculatedModel, glm::vec3(mScale, mScale, mScale));
 }

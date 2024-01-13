@@ -22,6 +22,7 @@ public:
      */
     Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned>&& indices,
          std::vector<Texture>&& textures);
+    Mesh(const Mesh& rhs);
 
     /**
      * \brief Draws a mesh for a given target
@@ -38,6 +39,11 @@ public:
     void setTexture(Texture&& newTexture);
 
 private:
+    /**
+     * \brief Initializes and sets up the necessary data buffers for rendering.
+     */
+    void setupBuffers();
+
     /**
      * \brief Sets the specified texture to the shader
      * \param shader Shader to which the texture should be bind

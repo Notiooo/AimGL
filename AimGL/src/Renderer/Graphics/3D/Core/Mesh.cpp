@@ -1,11 +1,7 @@
 #include "Mesh.h"
 #include "pch.h"
 
-Mesh::Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned>&& indices,
-           std::vector<Texture>&& textures)
-    : vertices(std::move(vertices))
-    , indices(std::move(indices))
-    , textures(std::move(textures))
+void Mesh::setupBuffers()
 {
     mVBO.setBuffer(this->vertices);
     mEBO.setBuffer(this->indices);
@@ -17,6 +13,23 @@ Mesh::Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned>&& indices,
     mBufferLayout.push<float>(2);
     mVAO.setBuffer(mVBO, mBufferLayout);
     mVAO.unbind();
+}
+
+Mesh::Mesh(std::vector<Vertex>&& vertices, std::vector<unsigned>&& indices,
+           std::vector<Texture>&& textures)
+    : vertices(std::move(vertices))
+    , indices(std::move(indices))
+    , textures(std::move(textures))
+{
+    setupBuffers();
+}
+
+Mesh::Mesh(const Mesh& rhs)
+    : vertices(rhs.vertices)
+    , indices(rhs.indices)
+    , textures(rhs.textures)
+{
+    setupBuffers();
 }
 
 void Mesh::setTextureToShaderUniform(const Shader& shader, const Texture& texture) const
