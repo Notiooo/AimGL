@@ -34,4 +34,5 @@
 #include "spdlog/spdlog.h"
 
 // Other
+#include "stb_image.h"
 #include <result.hpp>

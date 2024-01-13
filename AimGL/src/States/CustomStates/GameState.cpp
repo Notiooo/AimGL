@@ -12,7 +12,6 @@ GameState::GameState(StateStack& stack, WindowToRender& window)
     , mWindow(window)
     , mPlayer(window, mColliderRegister)
     , mRenderer(mWindow)
-    , mGameBackground(glm::vec2(1280, 720.f), glm::vec4(0.85f, 0.85f, 0.85f, 1.f))
     , mPhaseInLogoColor({window.getSize().x, window.getSize().y}, {0.067f, 0.11f, 0.18f, 1.1f})
     , mShootingRange(mColliderRegister, {-2, 0, 5.5})
     , mSidewayMovingTargetsRange(mColliderRegister, {3, 0, 5.5})
@@ -22,7 +21,6 @@ GameState::GameState(StateStack& stack, WindowToRender& window)
     Mouse::lockMouseAtCenter(mWindow);
     mWelcomeScreen.setScale(2);
     mWelcomeScreen.setPosition({0, 1, -2}, Sprite3D::Origin::Center);
-    mGameBackground.setPosition({0, 0});
     mPhaseInLogoColor.setPosition({0, 0});
     mPhaseInClock.restart();
 }
@@ -30,7 +28,7 @@ GameState::GameState(StateStack& stack, WindowToRender& window)
 void GameState::draw(sf::Window& target) const
 {
     MTR_SCOPE("GameState", "GameState::draw");
-    mGameBackground.draw(mRenderer);
+    mSkybox.draw(mPlayer.camera());
     mInfiniteGridFloor.draw(target, mPlayer.camera());
     mWelcomeScreen.draw(mRenderer, mPlayer.camera());
     mPhaseInLogoColor.draw(mRenderer);

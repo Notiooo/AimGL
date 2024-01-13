@@ -11,6 +11,7 @@
 #include <World/Physics/ColliderRegister.h>
 #include <World/Scene/GameObjects/ShootingRange.h>
 #include <World/Scene/GameObjects/SidewayMovingTargetsRange.h>
+#include <World/Skybox.h>
 
 class StateStack;
 
@@ -83,7 +84,6 @@ private:
     ColliderRegister mColliderRegister;
     Player mPlayer;
     Renderer mRenderer;
-    Rectangle2D mGameBackground;
     sf::Clock mPhaseInClock;
     Rectangle2D mPhaseInLogoColor;
     InfiniteGridFloor mInfiniteGridFloor;
@@ -91,5 +91,6 @@ private:
     SidewayMovingTargetsRange mSidewayMovingTargetsRange;
     Texture mWelcomeScreenTexture;
     Sprite3D mWelcomeScreen;
+    Skybox mSkybox;
     bool mDrawImgui{true};
 };

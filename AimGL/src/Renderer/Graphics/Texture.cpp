@@ -3,9 +3,6 @@
 
 #include "Renderer/Core/OpenglUtils.h"
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
-
 Texture::Texture(const std::string& filePath, Type type)
     : mTextureId(0)
     , mFilePath(filePath)
