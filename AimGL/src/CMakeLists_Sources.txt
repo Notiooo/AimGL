@@ -31,6 +31,7 @@ set(PROJECT_SOURCES
         World/Scene/GameObjects/Target.cpp
         World/Scene/GameObjects/TargetManager.cpp
         World/Scene/GameObjects/ButtonStand.cpp
+        World/Scene/GameObjects/ShootingRange.cpp
         World/Scene/GameObjects/LongCrate.cpp
         World/Physics/Drawable/AABB.cpp
         World/Physics/Drawable/Ray.cpp
