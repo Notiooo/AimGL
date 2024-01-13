@@ -1,10 +1,10 @@
 #pragma once
+#include "World/Physics/ColliderRegister.h"
 #include "World/Physics/ColliderTag.h"
 
 class SphereCollider;
 class RectangleCollider;
 class RayCollider;
-class ColliderRegister;
 
 /**
  * \brief Base class for collision detection objects.
@@ -17,6 +17,13 @@ public:
      * \param colliderRegister Reference to the collision register for tracking colliders.
      */
     explicit Collider(ColliderRegister& colliderRegister);
+    Collider(const Collider& rhs)
+        : mCallback(rhs.mCallback)
+        , mColliderRegister(rhs.mColliderRegister)
+        , mColliderTag(rhs.mColliderTag)
+    {
+        mColliderRegister.add(*this);
+    }
     virtual ~Collider();
 
     /**

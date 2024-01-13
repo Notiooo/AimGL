@@ -1,6 +1,7 @@
 #pragma once
 #include <Renderer/Graphics/2D/Sprite2D.h>
 #include <World/Camera.h>
+#include <World/Physics/Drawable/AABB.h>
 #include <World/Scene/GameObjects/Rifle.h>
 
 class Renderer;
@@ -44,6 +45,12 @@ public:
     void update(const float& deltaTime);
 
     /**
+     * \brief Update the position of the collider to match the current
+     * position of the associated object.
+     */
+    void updateColliderPosition();
+
+    /**
      * \brief Updates the Player logic at equal intervals independent of the frame rate.
      * \param deltaTime Time interval
      */
@@ -82,6 +89,17 @@ public:
      * \return Player's camera
      */
     const Camera& camera() const;
+
+    /**
+     * \brief Attempts to update an object's position by applying
+     * its velocity, provided there is no collision.
+     * \param position Reference to the object's current position,
+     * which will be updated if there's no collision.
+     * \param velocity Reference to the object's velocity that is to be applied to its position.
+     * \return Returns true if the position was updated successfully, false if a collision prevented
+     * the update.
+     */
+    bool tryUpdatePositionByApplyingVelocityIfCollisionAllows(float& position, float& velocity);
 
 private:
     /**
@@ -130,4 +148,7 @@ private:
     Sprite2D mCrosshair;
     sf::SoundBuffer mSoundBuffer;
     sf::Sound mWalkingSound;
+    ColliderRegister& mColliderRegister;
+    AABB mCollider;
+    bool doesPlayerStandOnCollider = false;
 };

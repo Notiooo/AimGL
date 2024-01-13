@@ -4,8 +4,9 @@
 
 
 /**
- * \brief A template class for colliders that are both drawable and functional in collision
- * detection. \tparam ColliderType The type of collider this class is templating (e.g.,
+ * \brief A template class for colliders that are both drawable and
+ * functional in collision detection.
+ * \tparam ColliderType The type of collider this class is templating (e.g.,
  * SphereCollider, RectangleCollider).
  */
 template<typename ColliderType>
@@ -13,14 +14,19 @@ class DrawableCollider
 {
 public:
     virtual ~DrawableCollider() = default;
+    DrawableCollider(DrawableCollider&&) noexcept = default;
+    DrawableCollider(const DrawableCollider&) = default;
 
     /**
      * \brief Constructor that initializes the collider with provided parameters.
      * \tparam Args The types of arguments to forward to the ColliderType's constructor.
+     * \param firstArg First argument to forward to the ColliderType's constructor.
      * \param params Arguments to forward to the ColliderType's constructor.
      */
-    template<typename... Args>
-    explicit DrawableCollider(Args&&... params);
+    template<
+        typename FirstArg, typename... Args,
+        typename = std::enable_if_t<!std::is_base_of_v<DrawableCollider, std::decay_t<FirstArg>>>>
+    explicit DrawableCollider(FirstArg&& firstArg, Args&&... params);
 
     /**
      * \brief Sets a callback function to be executed when a collision occurs.
@@ -45,9 +51,9 @@ protected:
 };
 
 template<typename ColliderType>
-template<typename... Args>
-DrawableCollider<ColliderType>::DrawableCollider(Args&&... params)
-    : mCollider(std::forward<Args>(params)...)
+template<typename FirstArg, typename... Args, typename>
+DrawableCollider<ColliderType>::DrawableCollider(FirstArg&& firstArg, Args&&... params)
+    : mCollider(std::forward<FirstArg>(firstArg), std::forward<Args>(params)...)
 {
 }
 

@@ -9,6 +9,7 @@ PreviewTarget::PreviewTarget(ColliderRegister& colliderRegister, const glm::vec3
 {
     mBuffer.loadFromFile("resources/Sounds/target-shot.wav");
     mSound.setBuffer(mBuffer);
+    mAABB.colliderTag(ColliderTag::Solid);
     mAABB.callback(
         [this](const Collider& collider)
         {

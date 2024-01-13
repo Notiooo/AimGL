@@ -7,8 +7,18 @@
 
 Shader::Shader(std::initializer_list<ShaderSource> shaders)
     : mRendererId(0)
+    , mFilePaths(std::move(shaders))
 {
-    auto parsedShaders = parseShaders(shaders);
+    auto parsedShaders = parseShaders(mFilePaths);
+    mRendererId = createShader(parsedShaders);
+    GLCall(glUseProgram(mRendererId));
+}
+
+Shader::Shader(std::vector<ShaderSource> shaders)
+    : mRendererId(0)
+    , mFilePaths(std::move(shaders))
+{
+    auto parsedShaders = parseShaders(mFilePaths);
     mRendererId = createShader(parsedShaders);
     GLCall(glUseProgram(mRendererId));
 }
@@ -96,6 +106,11 @@ void Shader::setUniform(const std::string& name, int i1, int i2) const
 void Shader::setUniform(const std::string& name, int i1) const
 {
     GLCall(glUniform1i(getUniformLocation(name), i1));
+}
+
+std::vector<ShaderSource> Shader::filePaths() const
+{
+    return mFilePaths;
 }
 
 unsigned Shader::getUniformLocation(const std::string& name) const

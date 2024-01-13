@@ -50,3 +50,16 @@ void ColliderRegister::updateAllCollisions()
         }
     }
 }
+
+std::vector<const Collider*> ColliderRegister::findCollisions(const Collider& colliderToFound) const
+{
+    std::vector<const Collider*> foundColliders;
+    for (const auto& collider: mColliders)
+    {
+        if (&*collider != &colliderToFound && colliderToFound.checkCollision(*collider))
+        {
+            foundColliders.push_back(collider);
+        }
+    }
+    return foundColliders;
+}

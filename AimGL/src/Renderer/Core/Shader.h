@@ -46,6 +46,7 @@ public:
      * \param shaders List of shaders, where one shader is the type and path to the file
      */
     Shader(std::initializer_list<ShaderSource> shaders);
+    Shader(std::vector<ShaderSource> shaders);
 
     Shader(const Shader&) = delete;
     Shader(Shader&&) noexcept;
@@ -75,6 +76,11 @@ public:
     void setUniform(const std::string& name, int i1, int i2) const;
     void setUniform(const std::string& name, int i1) const;
 
+    /**
+     * \brief Returns the paths to the shader files that this shader uses
+     * \return Paths to the shader files that this shader uses
+     */
+    std::vector<ShaderSource> filePaths() const;
 
 private:
     /**
@@ -141,6 +147,7 @@ private:
 
 private:
     unsigned int mRendererId;
+    std::vector<ShaderSource> mFilePaths;
     mutable std::unordered_map<std::string, int> mUniformLocationCache;
 };
 

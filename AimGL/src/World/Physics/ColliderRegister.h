@@ -25,6 +25,13 @@ public:
      */
     void updateAllCollisions();
 
+    /**
+     * \brief Identifies collisions with the specified collider.
+     * \param collider The collider to check for collisions against.
+     * \return List of colliders that are in collision with the given collider.
+     */
+    std::vector<const Collider*> findCollisions(const Collider& collider) const;
+
 private:
     /**
      * \brief Adds colliders that are queued for addition to the collision system.

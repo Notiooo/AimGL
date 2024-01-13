@@ -59,8 +59,8 @@ void GameState::draw(sf::Window& target) const
 bool GameState::fixedUpdate(const float& deltaTime)
 {
     MTR_SCOPE("GameState", "GameState::fixedUpdate");
-    mPlayer.fixedUpdate(deltaTime);
     mColliderRegister.updateAllCollisions();
+    mPlayer.fixedUpdate(deltaTime);
     return true;
 }
 

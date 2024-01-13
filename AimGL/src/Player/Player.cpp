@@ -1,12 +1,15 @@
 #include "Player.h"
-#include "Utils/Lerp.h"
 #include "pch.h"
+
+#include <World/Physics/ColliderRegister.h>
 
 Player::Player(WindowToRender& window, ColliderRegister& colliderRegister)
     : mCamera(window)
     , mCrosshairTexture("resources/Textures/crosshair.png")
     , mCrosshair(mCrosshairTexture)
     , mRifle(mCamera, colliderRegister)
+    , mColliderRegister(colliderRegister)
+    , mCollider(colliderRegister, {0, 0, 0}, {0.35, 0.8, 0.35})
 {
     mCrosshair.setPosition({window.getSize().x / 2.f, window.getSize().y / 2.f},
                            Sprite2D::Origin::Center);
@@ -22,6 +25,7 @@ void Player::draw(const Renderer& target) const
 {
     mRifle.draw(target);
     mCrosshair.draw(target);
+    mCollider.draw(target, mCamera);
 }
 
 void Player::update(const float& deltaTime)
@@ -31,6 +35,33 @@ void Player::update(const float& deltaTime)
     mRifle.update(deltaTime);
 }
 
+void Player::updateColliderPosition()
+{
+    auto colliderPosition = mPosition - (mCollider.dimensions() / 2.f);
+    colliderPosition.y = mPosition.y;
+    mCollider.setPosition(colliderPosition);
+}
+
+bool Player::tryUpdatePositionByApplyingVelocityIfCollisionAllows(float& position, float& velocity)
+{
+    position += velocity;
+    updateColliderPosition();
+    auto collisions = mColliderRegister.findCollisions(mCollider.collider());
+    std::erase_if(collisions,
+                  [](const auto& collision)
+                  {
+                      return collision->colliderTag() != ColliderTag::Solid;
+                  });
+    if (not collisions.empty())
+    {
+        position -= velocity;
+        velocity = 0;
+        updateColliderPosition();
+        return false;
+    }
+    return true;
+}
+
 void Player::updatePhysics(float deltaTime)
 {
     handleMovementKeyboardInputs(deltaTime);
@@ -38,11 +69,14 @@ void Player::updatePhysics(float deltaTime)
     manageVerticalVelocity(deltaTime);
     limitVelocity(deltaTime);
 
-    mPosition += mVelocity;
+    tryUpdatePositionByApplyingVelocityIfCollisionAllows(mPosition.x, mVelocity.x);
+    doesPlayerStandOnCollider =
+        not tryUpdatePositionByApplyingVelocityIfCollisionAllows(mPosition.y, mVelocity.y);
     if (mPosition.y < 0)
     {
         mPosition.y = 0;
     }
+    tryUpdatePositionByApplyingVelocityIfCollisionAllows(mPosition.z, mVelocity.z);
 }
 
 void Player::decelerateVelocity(const float& deltaTime)
@@ -85,6 +119,7 @@ void Player::limitVelocity(const float& deltaTime)
 
 void Player::fixedUpdate(const float& deltaTime)
 {
+    updateColliderPosition();
     updatePhysics(deltaTime);
 }
 
@@ -169,5 +204,5 @@ const Camera& Player::camera() const
 
 bool Player::isOnGround() const
 {
-    return mPosition.y <= 0;
+    return mPosition.y <= 0 or doesPlayerStandOnCollider;
 }

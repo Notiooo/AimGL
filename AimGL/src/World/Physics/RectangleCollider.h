@@ -16,6 +16,9 @@ public:
     RectangleCollider(ColliderRegister& colliderRegister, const glm::vec3& min,
                       const glm::vec3& max);
 
+    RectangleCollider(RectangleCollider&&) noexcept = delete;
+    RectangleCollider(const RectangleCollider&) = default;
+
     /**
      * \brief Checks for collision with another collider.
      * \param other The collider to check collision against.

@@ -8,7 +8,6 @@
 
 class Camera;
 class Renderer;
-class ColliderRegister;
 
 /**
  * \brief Represents a ray in 3D space, defined by an origin point, direction vector, and length.
