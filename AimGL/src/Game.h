@@ -15,7 +15,6 @@ using WindowToRender = sf::Window;
 #endif
 
 
-#include "Resources/Resources.h"
 #include "States/StateStack.h"
 
 /**
@@ -152,11 +151,6 @@ private:
      * @brief Time since the last call to the fixedUpdate function
      */
     sf::Time mTimeSinceLastFixedUpdate = sf::Time::Zero;
-
-    /**
-     * @brief Any game assets from textures or fonts
-     */
-    GameResources mGameResources;
 
     /**
      * \brief Stores and manages in-game states.
